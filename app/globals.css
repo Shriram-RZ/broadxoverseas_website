@@ -1,8 +1,7 @@
 /* =========================================================
-   Broad X Overseas — Global Styles
-   Design tokens + base styles + component primitives.
-   Palette derived from the brand reference image; saffron
-   accent nods to turmeric and jaggery.
+   Broad X Overseas — Global Styles (Dark Mode)
+   Deep-void backdrop with saffron accents. Navy-tinted shadows
+   become near-black for depth; neutrals flip to ink-on-light.
    ========================================================= */
 
 :root {
@@ -44,24 +43,24 @@
   --danger:  #C0392B;
   --info:    var(--blue-600);
 
-  /* Surfaces */
-  --bg-page:      var(--blue-50);
-  --bg-surface:   #FFFFFF;
-  --bg-raised:    #FFFFFF;
+  /* Dark surfaces */
+  --bg-page:      #070E1C;
+  --bg-surface:   #0E1A2F;
+  --bg-raised:    #142742;
   --bg-inverse:   var(--blue-800);
   --bg-inverse-2: var(--blue-900);
 
-  /* Foreground */
-  --fg-1: var(--ink-900);
-  --fg-2: var(--ink-600);
-  --fg-3: var(--ink-500);
-  --fg-4: var(--ink-400);
+  /* Dark foreground */
+  --fg-1: #EAF1FB;
+  --fg-2: #B7C5DB;
+  --fg-3: #7F91AC;
+  --fg-4: #4E5E7A;
   --fg-on-dark:   #EEF3FA;
   --fg-on-dark-2: #A8B7CB;
 
-  /* Borders */
-  --border-1: var(--ink-200);
-  --border-2: var(--ink-300);
+  /* Dark borders */
+  --border-1: rgba(255,255,255,.06);
+  --border-2: rgba(255,255,255,.12);
   --border-dark: rgba(255,255,255,.08);
 
   /* Typography families (next/font variables) */
@@ -69,21 +68,22 @@
   --font-sans:  var(--font-inter), ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
   --font-mono:  var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
 
-  --fs-display-xl: clamp(3.5rem, 7vw, 6rem);
-  --fs-display:    clamp(2.75rem, 5vw, 4.5rem);
-  --fs-h1:         clamp(2.25rem, 3.6vw, 3.25rem);
-  --fs-h2:         clamp(1.75rem, 2.6vw, 2.25rem);
-  --fs-h3:         1.5rem;
-  --fs-h4:         1.25rem;
-  --fs-lead:       1.125rem;
-  --fs-body:       1rem;
-  --fs-small:      0.875rem;
-  --fs-meta:       0.75rem;
+  /* Tighter type scale */
+  --fs-display-xl: clamp(2.75rem, 5.5vw, 4.5rem);
+  --fs-display:    clamp(2.25rem, 4vw, 3.5rem);
+  --fs-h1:         clamp(1.875rem, 3vw, 2.5rem);
+  --fs-h2:         clamp(1.5rem, 2.2vw, 1.875rem);
+  --fs-h3:         1.25rem;
+  --fs-h4:         1.0625rem;
+  --fs-lead:       1rem;
+  --fs-body:       0.9375rem;
+  --fs-small:      0.8125rem;
+  --fs-meta:       0.6875rem;
 
   --lh-tight: 1.05;
   --lh-snug:  1.2;
   --lh-normal: 1.5;
-  --lh-relaxed: 1.65;
+  --lh-relaxed: 1.6;
 
   --ls-tight: -0.02em;
   --ls-snug:  -0.01em;
@@ -98,12 +98,12 @@
   /* Radius */
   --r-xs: 4px; --r-sm: 8px; --r-md: 12px; --r-lg: 16px; --r-xl: 24px; --r-2xl: 32px; --r-pill: 999px;
 
-  /* Shadows — navy-tinted, never grey */
-  --shadow-1: 0 1px 2px rgba(12,35,64,.06), 0 1px 1px rgba(12,35,64,.04);
-  --shadow-2: 0 4px 12px rgba(12,35,64,.06), 0 2px 4px rgba(12,35,64,.04);
-  --shadow-3: 0 12px 32px rgba(12,35,64,.10), 0 4px 8px rgba(12,35,64,.04);
-  --shadow-4: 0 24px 60px rgba(12,35,64,.16), 0 8px 16px rgba(12,35,64,.06);
-  --shadow-ring-focus: 0 0 0 3px rgba(26,77,128,.22);
+  /* Dark shadows — black base, warm glow optional per component */
+  --shadow-1: 0 1px 2px rgba(0,0,0,.5);
+  --shadow-2: 0 6px 18px rgba(0,0,0,.45), 0 2px 4px rgba(0,0,0,.3);
+  --shadow-3: 0 18px 40px rgba(0,0,0,.55), 0 4px 10px rgba(0,0,0,.35);
+  --shadow-4: 0 28px 70px rgba(0,0,0,.65), 0 8px 20px rgba(0,0,0,.4);
+  --shadow-ring-focus: 0 0 0 3px rgba(227,161,58,.32);
 
   /* Layout */
   --container: 1200px;
@@ -124,11 +124,15 @@
 /* ---------- Base ---------- */
 *, *::before, *::after { box-sizing: border-box; }
 html, body { margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; color-scheme: dark; }
 body {
   font-family: var(--font-sans);
   color: var(--fg-1);
-  background: var(--bg-page);
+  background:
+    radial-gradient(1200px 700px at 100% -10%, rgba(26,77,128,.32), transparent 60%),
+    radial-gradient(900px 600px at -10% 20%, rgba(227,161,58,.08), transparent 60%),
+    var(--bg-page);
+  background-attachment: fixed;
   font-size: var(--fs-body);
   line-height: var(--lh-normal);
   -webkit-font-smoothing: antialiased;
@@ -146,18 +150,19 @@ button { font: inherit; }
 h1, h2, h3, h4 { margin: 0; color: var(--fg-1); text-wrap: balance; }
 .display {
   font-family: var(--font-serif); font-weight: 500;
-  font-size: clamp(3rem, 6vw, 5rem); line-height: 1; letter-spacing: -0.03em;
+  font-size: var(--fs-display); line-height: 1.02; letter-spacing: -0.03em;
 }
-.display em { font-style: italic; font-weight: 400; color: var(--blue-600); }
+.display em { font-style: italic; font-weight: 400; color: var(--saffron-300); }
 .display-xl {
   font-family: var(--font-serif); font-weight: 500;
   font-size: var(--fs-display-xl); line-height: .98; letter-spacing: -0.03em;
 }
 h1.serif, h2.section-title {
   font-family: var(--font-serif); font-weight: 600;
-  font-size: var(--fs-h1); line-height: 1.1; letter-spacing: -0.02em;
+  font-size: var(--fs-h1); line-height: 1.12; letter-spacing: -0.02em;
+  color: var(--fg-1);
 }
-h2.section-title em { font-style: italic; font-weight: 400; color: var(--saffron-600); }
+h2.section-title em { font-style: italic; font-weight: 400; color: var(--saffron-300); }
 h3.serif { font-family: var(--font-serif); font-weight: 600; }
 .lead {
   font-size: var(--fs-lead); line-height: var(--lh-relaxed);
@@ -165,15 +170,15 @@ h3.serif { font-family: var(--font-serif); font-weight: 600; }
 }
 p { color: var(--fg-2); line-height: var(--lh-relaxed); margin: 0 0 var(--space-4); }
 .eyebrow {
-  font-size: 12px; font-weight: 600; letter-spacing: .14em;
-  text-transform: uppercase; color: var(--blue-600);
+  font-size: 11px; font-weight: 600; letter-spacing: .14em;
+  text-transform: uppercase; color: var(--saffron-300);
 }
 .eyebrow-chip {
   display: inline-flex; align-items: center; gap: 8px;
-  background: var(--saffron-50); color: var(--saffron-700);
-  padding: 7px 14px; border-radius: var(--r-pill);
-  border: 1px solid var(--saffron-100);
-  font-size: 12px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase;
+  background: rgba(227,161,58,.12); color: var(--saffron-300);
+  padding: 6px 12px; border-radius: var(--r-pill);
+  border: 1px solid rgba(227,161,58,.28);
+  font-size: 11px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase;
 }
 .eyebrow-chip .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--saffron-500); }
 .serif-italic { font-family: var(--font-serif); font-style: italic; font-weight: 400; }
@@ -181,57 +186,57 @@ p { color: var(--fg-2); line-height: var(--lh-relaxed); margin: 0 0 var(--space-
 .text-muted { color: var(--fg-3); }
 
 /* ---------- Sections ---------- */
-section { padding: clamp(64px, 10vw, 120px) 0; }
+section { padding: clamp(48px, 7vw, 88px) 0; }
 .section-head {
-  display: grid; grid-template-columns: 1fr auto; gap: 40px;
-  align-items: end; margin-bottom: 56px;
+  display: grid; grid-template-columns: 1fr auto; gap: 32px;
+  align-items: end; margin-bottom: 40px;
 }
-.section-head .lead { margin: 16px 0 0; max-width: 540px; }
+.section-head .lead { margin: 14px 0 0; max-width: 520px; }
 @media (max-width: 780px) { .section-head { grid-template-columns: 1fr; } }
 
 /* ---------- Buttons ---------- */
 .btn {
-  border: 0; cursor: pointer; font-weight: 600; font-size: 14px;
+  border: 0; cursor: pointer; font-weight: 600; font-size: 13px;
   display: inline-flex; align-items: center; justify-content: center; gap: 8px;
   transition: transform var(--dur-fast) var(--ease-standard),
               background var(--dur-fast), color var(--dur-fast),
               box-shadow var(--dur-fast), border-color var(--dur-fast);
   text-align: center; white-space: nowrap;
 }
-.btn svg { width: 16px; height: 16px; }
+.btn svg { width: 15px; height: 15px; }
 .btn-primary {
-  background: var(--blue-600); color: #fff;
-  padding: 12px 22px; border-radius: var(--r-pill);
-  box-shadow: 0 8px 22px rgba(26,77,128,.25);
+  background: var(--saffron-500); color: #0C2340;
+  padding: 11px 20px; border-radius: var(--r-pill);
+  box-shadow: 0 8px 22px rgba(227,161,58,.28);
 }
-.btn-primary:hover { background: var(--blue-700); transform: translateY(-1px); box-shadow: 0 12px 28px rgba(26,77,128,.32); }
-.btn-primary:active { transform: translateY(0); box-shadow: var(--shadow-2); }
+.btn-primary:hover { background: var(--saffron-600); color: #fff; transform: translateY(-1px); }
+.btn-primary:active { transform: translateY(0); }
 .btn-accent {
-  background: var(--saffron-500); color: var(--ink-900);
-  padding: 12px 22px; border-radius: var(--r-pill);
-  box-shadow: 0 8px 22px rgba(227,161,58,.25);
+  background: var(--saffron-500); color: #0C2340;
+  padding: 11px 20px; border-radius: var(--r-pill);
+  box-shadow: 0 8px 22px rgba(227,161,58,.28);
 }
 .btn-accent:hover { background: var(--saffron-600); color: #fff; transform: translateY(-1px); }
 .btn-accent:active { transform: translateY(0); }
 .btn-ghost-dark {
-  background: rgba(255,255,255,.06);
-  border: 1px solid rgba(255,255,255,.14); color: #fff;
-  padding: 12px 22px; border-radius: var(--r-pill);
+  background: rgba(255,255,255,.05);
+  border: 1px solid rgba(255,255,255,.12); color: #fff;
+  padding: 11px 20px; border-radius: var(--r-pill);
 }
-.btn-ghost-dark:hover { background: rgba(255,255,255,.12); transform: translateY(-1px); }
+.btn-ghost-dark:hover { background: rgba(255,255,255,.1); transform: translateY(-1px); }
 .btn-outline {
-  background: transparent; border: 1.5px solid var(--blue-600);
-  color: var(--blue-600); padding: 11px 21px; border-radius: var(--r-pill);
+  background: transparent; border: 1.5px solid var(--saffron-500);
+  color: var(--saffron-300); padding: 10px 19px; border-radius: var(--r-pill);
 }
-.btn-outline:hover { background: var(--blue-600); color: #fff; transform: translateY(-1px); }
+.btn-outline:hover { background: var(--saffron-500); color: #0C2340; transform: translateY(-1px); }
 
 /* ---------- Badges / chips ---------- */
 .badge {
   display: inline-flex; align-items: center; gap: 6px;
-  font-size: 12px; font-weight: 600; letter-spacing: .02em;
+  font-size: 11px; font-weight: 600; letter-spacing: .02em;
   padding: 5px 10px; border-radius: var(--r-pill);
-  background: var(--blue-50); color: var(--blue-700);
-  border: 1px solid var(--blue-100);
+  background: rgba(26,77,128,.25); color: var(--blue-200);
+  border: 1px solid rgba(184,207,228,.15);
 }
-.badge.saffron { background: var(--saffron-50); color: var(--saffron-700); border-color: var(--saffron-100); }
-.badge.success { background: rgba(47,158,107,.1); color: var(--success); border-color: rgba(47,158,107,.2); }
+.badge.saffron { background: rgba(227,161,58,.14); color: var(--saffron-300); border-color: rgba(227,161,58,.28); }
+.badge.success { background: rgba(47,158,107,.12); color: #6AD2A3; border-color: rgba(47,158,107,.25); }
