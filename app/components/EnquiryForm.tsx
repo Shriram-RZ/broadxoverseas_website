@@ -1,75 +1,109 @@
 "use client";
 
-import { useState } from "react";
-import { Arrow, Check } from "./Icons";
+import { useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
+import { Arrow, Check, ChevronDown } from "./Icons";
 import { PRODUCTS } from "./products-data";
 
-type Props = { defaultProduct?: string };
+const PRODUCT_OPTIONS = [
+  { slug: "general", name: "General inquiry" },
+  ...PRODUCTS.map((p) => ({ slug: p.slug, name: p.name })),
+];
 
-export default function EnquiryForm({ defaultProduct }: Props) {
+export default function EnquiryForm() {
+  const params = useSearchParams();
+  const incoming = params.get("product");
+
+  const [product, setProduct] = useState<string>("general");
   const [sent, setSent] = useState(false);
+
+  useEffect(() => {
+    if (!incoming) return;
+    const match = PRODUCT_OPTIONS.find((p) => p.slug === incoming);
+    if (match) setProduct(match.slug);
+  }, [incoming]);
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setSent(true);
-    setTimeout(() => setSent(false), 3000);
+    setTimeout(() => setSent(false), 4000);
   };
 
   return (
-    <form className="form" onSubmit={onSubmit}>
-      <div className="row">
-        <div className="field">
-          <label htmlFor="name">Name *</label>
-          <input id="name" required placeholder="Your full name" />
+    <form className="contact-card" onSubmit={onSubmit} noValidate>
+      <h3>Send Inquiry</h3>
+      <p className="sub">
+        We typically respond within one business day with sample availability,
+        pricing and a timeline.
+      </p>
+
+      <div className="form-grid">
+        <div className="form-field">
+          <input id="name" name="name" type="text" required placeholder=" " autoComplete="name" />
+          <label htmlFor="name">Name</label>
         </div>
-        <div className="field">
-          <label htmlFor="email">Email *</label>
-          <input id="email" required type="email" placeholder="you@company.com" />
-        </div>
-      </div>
-      <div className="row">
-        <div className="field">
-          <label htmlFor="phone">Phone *</label>
-          <input id="phone" required placeholder="+971 ··· ····" />
-        </div>
-        <div className="field">
+
+        <div className="form-field">
+          <input id="company" name="company" type="text" placeholder=" " autoComplete="organization" />
           <label htmlFor="company">Company</label>
-          <input id="company" placeholder="Company name" />
+        </div>
+
+        <div className="form-field">
+          <input id="email" name="email" type="email" required placeholder=" " autoComplete="email" />
+          <label htmlFor="email">Email</label>
+        </div>
+
+        <div className="form-field">
+          <input id="location" name="location" type="text" placeholder=" " autoComplete="country-name" />
+          <label htmlFor="location">Country / Location</label>
         </div>
       </div>
-      <div className="row">
-        <div className="field">
-          <label htmlFor="location">Location *</label>
-          <input id="location" required placeholder="City, Country" />
-        </div>
-        <div className="field">
-          <label htmlFor="product">Product Interest</label>
-          <select id="product" defaultValue={defaultProduct ?? PRODUCTS[0].name}>
-            {PRODUCTS.map((p) => (
-              <option key={p.slug}>{p.name}</option>
-            ))}
-          </select>
-        </div>
+
+      <div className="form-field">
+        <input id="phone" name="phone" type="tel" placeholder=" " autoComplete="tel" />
+        <label htmlFor="phone">Phone (optional)</label>
       </div>
-      <div className="field">
-        <label htmlFor="message">Message</label>
-        <textarea
-          id="message"
-          rows={4}
-          placeholder="Tell us about volumes, timelines and shipping destination…"
-        />
+
+      <div className="form-field form-field-select">
+        <select
+          id="product"
+          name="product"
+          value={product}
+          onChange={(e) => setProduct(e.target.value)}
+          required
+        >
+          {PRODUCT_OPTIONS.map((p) => (
+            <option key={p.slug} value={p.slug}>
+              {p.name}
+            </option>
+          ))}
+        </select>
+        <label htmlFor="product" className="float">Product of interest</label>
+        <span className="select-chev" aria-hidden>
+          <ChevronDown size={14} />
+        </span>
       </div>
-      <button className="btn btn-primary" type="submit">
-        {sent ? (
-          <>
-            Enquiry sent <Check size={14} />
-          </>
-        ) : (
-          <>
-            Send enquiry <Arrow />
-          </>
-        )}
-      </button>
+
+      <div className="form-field">
+        <textarea id="requirement" name="requirement" required placeholder=" " rows={5} />
+        <label htmlFor="requirement">Requirement — quantity, target port, packaging</label>
+      </div>
+
+      <div className="form-actions">
+        <button type="submit" className="btn btn-primary">
+          {sent ? (
+            <>Inquiry sent <Check size={14} /></>
+          ) : (
+            <>Send Inquiry <Arrow size={14} /></>
+          )}
+        </button>
+      </div>
+
+      {sent && (
+        <div className="form-success" role="status">
+          <Check size={14} /> Thanks — we&apos;ll be in touch shortly.
+        </div>
+      )}
     </form>
   );
 }

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Arrow } from "./Icons";
+import { Ornament, ScrollReveal, MagneticHover } from "./Motion";
 
 type Props = {
   eyebrow?: string;
@@ -9,45 +10,51 @@ type Props = {
   primaryHref?: string;
   secondaryLabel?: string;
   secondaryHref?: string;
-  background?: "wash" | "white";
 };
 
 export default function CTAStrip({
-  eyebrow = "Ready to Source with Confidence?",
+  eyebrow = "Ready to source with confidence?",
   title = (
     <>
-      Your reliable supply partner <em>is just a message away.</em>
+      Your reliable supply partner is{" "}
+      <em>just a message away.</em>
     </>
   ),
   description = "Connect with our team to discuss your requirements, request samples, or get a competitive quotation.",
-  primaryLabel = "Send Enquiry",
+  primaryLabel = "Get Quote",
   primaryHref = "/contact",
-  secondaryLabel = "Download Brochure",
-  secondaryHref = "#",
-  background = "wash",
+  secondaryLabel = "Send Requirement",
+  secondaryHref = "/contact",
 }: Props) {
   return (
-    <section className={background === "white" ? "bg-white" : "bg-wash"} style={{ padding: "0 0 80px" }}>
+    <section>
       <div className="container">
-        <div className="cta-strip">
-          <div className="grid">
-            <div>
-              <div className="eyebrow">{eyebrow}</div>
-              <h2>{title}</h2>
-              <p>{description}</p>
-            </div>
-            <div className="actions">
-              <Link href={primaryHref} className="btn btn-accent">
-                {primaryLabel} <Arrow />
-              </Link>
-              {secondaryLabel && (
-                <Link href={secondaryHref} className="btn btn-ghost-dark">
-                  {secondaryLabel}
-                </Link>
-              )}
+        <ScrollReveal>
+          <div className="cta-strip">
+            <div className="grid">
+              <div>
+                <div className="eyebrow">{eyebrow}</div>
+                <h2>{title}</h2>
+                <Ornament />
+                <p>{description}</p>
+              </div>
+              <div className="actions">
+                <MagneticHover strength={0.15}>
+                  <Link href={primaryHref} className="btn btn-primary">
+                    {primaryLabel} <Arrow />
+                  </Link>
+                </MagneticHover>
+                {secondaryLabel && (
+                  <MagneticHover strength={0.15}>
+                    <Link href={secondaryHref} className="btn btn-glass">
+                      {secondaryLabel}
+                    </Link>
+                  </MagneticHover>
+                )}
+              </div>
             </div>
           </div>
-        </div>
+        </ScrollReveal>
       </div>
     </section>
   );

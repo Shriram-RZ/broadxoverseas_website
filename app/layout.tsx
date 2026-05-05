@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Fraunces, Inter, JetBrains_Mono } from "next/font/google";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import { MotionProvider, ScrollProgress } from "./components/Motion";
 import "./globals.css";
 import "./components.css";
 
@@ -36,12 +37,21 @@ export default function RootLayout({
   return (
     <html
       lang="en"
+      data-scroll-behavior="smooth"
       className={`${inter.variable} ${fraunces.variable} ${jetbrainsMono.variable}`}
     >
+      <head>
+        <noscript>
+          <style>{`.reveal,[data-hero-item]{opacity:1!important;transform:none!important;visibility:visible!important;}`}</style>
+        </noscript>
+      </head>
       <body>
-        <Navbar />
-        <main>{children}</main>
-        <Footer />
+        <MotionProvider>
+          <ScrollProgress />
+          <Navbar />
+          <main>{children}</main>
+          <Footer />
+        </MotionProvider>
       </body>
     </html>
   );

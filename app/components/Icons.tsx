@@ -79,3 +79,17 @@ export const MapIcon = make(
   "M1 6l7-3 8 3 7-3v15l-7 3-8-3-7 3V6zM8 3v15M16 6v15",
   22
 );
+export const Anchor = make(
+  "M12 22V8M12 8a3 3 0 100-6 3 3 0 000 6zM5 12H2a10 10 0 0020 0h-3M8 12h8",
+  22
+);
+export const Ship = make(
+  "M2 20a4 4 0 003-1 4 4 0 003 1 4 4 0 003-1 4 4 0 003 1 4 4 0 003-1 4 4 0 003 1M4 18l-2-6h20l-2 6M6 12V6h12v6M9 6V3h6v3",
+  22
+);
+export const Container = make(
+  "M3 6h18v12H3zM7 6v12M11 6v12M15 6v12M19 6v12",
+  22
+);
+export const ChevronDown = make("M6 9l6 6 6-6", 16, 2.2);
+export const Plus = make("M12 5v14M5 12h14", 16, 2.2);

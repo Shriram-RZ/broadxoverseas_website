@@ -86,7 +86,7 @@ export default function GalleryPage() {
         description="Fields, harvests, processing lines and ports — the everyday workflow behind every Broad X Overseas shipment."
       />
 
-      <section className="bg-white">
+      <section>
         <div className="container">
           <div className="gallery-grid">
             {IMAGES.map((img, i) => (

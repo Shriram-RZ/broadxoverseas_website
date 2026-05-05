@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Ornament } from "./Motion";
 
 type Crumb = { label: string; href?: string };
 
@@ -26,6 +27,7 @@ export default function PageHero({ eyebrow, title, description, crumbs }: Props)
           )}
           {eyebrow && !crumbs && <div className="crumbs">{eyebrow}</div>}
           <h1>{title}</h1>
+          <Ornament />
           {description && <p>{description}</p>}
         </div>
       </div>
