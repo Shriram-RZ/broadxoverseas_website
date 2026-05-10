@@ -2,7 +2,8 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
+import { gsap } from "gsap";
 import { Arrow, Menu, Close } from "./Icons";
 
 const LINKS = [
@@ -17,6 +18,7 @@ export default function Navbar() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const ctaRef = useRef<HTMLAnchorElement>(null);
 
   const isActive = (href: string) =>
     href === "/" ? pathname === "/" : pathname?.startsWith(href);
@@ -26,6 +28,22 @@ export default function Navbar() {
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  useEffect(() => {
+    if (!ctaRef.current) return;
+    
+    const tl = gsap.to(ctaRef.current, {
+      "--shine-pos": "150%",
+      duration: 1.8,
+      repeat: -1,
+      repeatDelay: 3.5,
+      ease: "power2.inOut",
+    });
+
+    return () => {
+      tl.kill();
+    };
   }, []);
 
   useEffect(() => {
@@ -73,7 +91,11 @@ export default function Navbar() {
                   {l.label}
                 </Link>
               ))}
-              <Link href="/contact" className="btn btn-primary nav-cta">
+              <Link 
+                href="/contact" 
+                className="btn btn-primary nav-cta"
+                ref={ctaRef}
+              >
                 Get Quote <Arrow size={14} />
               </Link>
             </nav>
@@ -151,3 +173,4 @@ export default function Navbar() {
     </>
   );
 }
+

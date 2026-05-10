@@ -2,7 +2,6 @@
 
 import { useEffect, useLayoutEffect, useMemo, useRef, useState, useCallback } from "react";
 import Link from "next/link";
-import { useSearchParams, useRouter, usePathname } from "next/navigation";
 import { gsap } from "gsap";
 import {
   PRODUCTS,
@@ -10,6 +9,7 @@ import {
   type Product,
 } from "../components/products-data";
 import { Arrow, Close, ChevronDown, Check } from "../components/Icons";
+import ProductCard from "../components/ProductCard";
 
 const isBrowser = typeof window !== "undefined";
 const useIsoLayoutEffect = isBrowser ? useLayoutEffect : useEffect;
@@ -26,15 +26,13 @@ const SORTS: { key: SortKey; label: string }[] = [
 ];
 
 export default function ProductsExplorer() {
-  const router = useRouter();
-  const pathname = usePathname();
-  const params = useSearchParams();
-  const slug = params.get("p");
+  const pathname = typeof window !== "undefined" ? window.location.pathname : "/products";
 
   const [cat, setCat] = useState<(typeof PRODUCT_CATEGORIES)[number]>("All");
   const [query, setQuery] = useState("");
   const [sort, setSort] = useState<SortKey>("default");
   const [sortOpen, setSortOpen] = useState(false);
+  const [displayed, setDisplayed] = useState<Product | null>(null);
 
   const list = useMemo(() => {
     let out: Product[] =
@@ -65,70 +63,135 @@ export default function ProductsExplorer() {
     return out;
   }, [cat, query, sort]);
 
-  const fromUrl = slug ? PRODUCTS.find((p) => p.slug === slug) ?? null : null;
-
-  // `displayed` drives the modal render — independent of URL so we can animate
-  // close before unmounting.
-  const [displayed, setDisplayed] = useState<Product | null>(fromUrl);
+  const overlayRef = useRef<HTMLDivElement>(null);
+  const cardRef = useRef<HTMLDivElement>(null);
+  const gridRef = useRef<HTMLDivElement>(null);
+  const stripRef = useRef<HTMLDivElement>(null);
+  const swapSlugRef = useRef<string | null>(null);
+  const modalWasOpenRef = useRef(false);
 
   const clearUrl = useCallback(() => {
-    router.replace(pathname, { scroll: false });
-  }, [router, pathname]);
+    if (typeof window === "undefined") return;
+    const url = new URL(window.location.href);
+    url.searchParams.delete("p");
+    window.history.replaceState(null, "", url.toString());
+  }, []);
 
   const openProduct = useCallback(
     (p: Product) => {
-      router.replace(`${pathname}?p=${p.slug}`, { scroll: false });
+      setDisplayed(p);
+      if (typeof window === "undefined") return;
+      const url = new URL(window.location.href);
+      url.searchParams.set("p", p.slug);
+      window.history.pushState(null, "", url.toString());
     },
-    [router, pathname]
+    []
   );
 
-  /* Modal refs */
-  const overlayRef = useRef<HTMLDivElement>(null);
-  const cardRef = useRef<HTMLDivElement>(null);
+  // Initial load from URL
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const slug = params.get("p");
+    if (slug) {
+      const p = PRODUCTS.find((item) => item.slug === slug);
+      if (p) setDisplayed(p);
+    }
+  }, []);
 
-  /* Close that animates first, then unmounts and clears the URL */
+  // Back button handling
+  useEffect(() => {
+    const onPop = () => {
+      const params = new URLSearchParams(window.location.search);
+      const slug = params.get("p");
+      if (!slug) {
+        setDisplayed(null);
+      } else {
+        const p = PRODUCTS.find((item) => item.slug === slug);
+        if (p) setDisplayed(p);
+      }
+    };
+    window.addEventListener("popstate", onPop);
+    return () => window.removeEventListener("popstate", onPop);
+  }, []);
+
   const closeModal = useCallback(() => {
     const overlay = overlayRef.current;
     const card = cardRef.current;
-    if (!overlay || !card || reducedMotion()) {
+    const grid = gridRef.current;
+    const strip = stripRef.current;
+
+    if (reducedMotion()) {
+      gsap.set([grid, strip].filter(Boolean), { clearProps: "transform,opacity,filter" });
       setDisplayed(null);
       clearUrl();
       return;
     }
-    gsap.killTweensOf([overlay, card]);
+
+    if (!overlay || !card) {
+      setDisplayed(null);
+      clearUrl();
+      return;
+    }
+
+    const els = [overlay, card, grid, strip].filter(Boolean) as HTMLElement[];
+    gsap.killTweensOf(els);
+
     const tl = gsap.timeline({
       onComplete: () => {
+        if (grid) gsap.set(grid, { clearProps: "transform,opacity,filter" });
+        if (strip) gsap.set(strip, { clearProps: "transform,opacity" });
         setDisplayed(null);
         clearUrl();
       },
     });
+
     tl.to(card, {
       autoAlpha: 0,
-      y: 24,
-      scale: 0.96,
-      duration: 0.32,
-      ease: "power3.in",
+      y: 40,
+      scale: 0.95,
+      duration: 0.45,
+      ease: "power4.inOut",
     });
-    tl.to(overlay, { autoAlpha: 0, duration: 0.22, ease: "power2.in" }, "-=0.18");
+    tl.to(overlay, { autoAlpha: 0, duration: 0.4, ease: "power2.inOut" }, "-=0.3");
+    if (strip) {
+      tl.to(strip, { yPercent: 100, duration: 0.36, ease: "power3.in" }, "-=0.32");
+    }
+    if (grid) {
+      tl.to(
+        grid,
+        {
+          y: 0,
+          scale: 1,
+          autoAlpha: 1,
+          filter: "saturate(1)",
+          duration: 0.52,
+          ease: "power2.out",
+        },
+        "-=0.38"
+      );
+    }
   }, [clearUrl]);
 
-  /* Open: when URL slug points to a product, set it as displayed (mounts modal) */
-  useEffect(() => {
-    if (fromUrl && fromUrl.slug !== displayed?.slug) {
-      setDisplayed(fromUrl);
-    } else if (!fromUrl && displayed) {
-      // External clear (browser back, etc.) — animate close
-      closeModal();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [fromUrl?.slug]);
 
-  /* Open animation runs once the modal is in the DOM */
+
+  useEffect(() => {
+    if (!displayed) {
+      swapSlugRef.current = null;
+      modalWasOpenRef.current = false;
+    }
+  }, [displayed]);
+
+  /* Modal open + grid recedes + strip rises — only on first open, not when switching product */
   useIsoLayoutEffect(() => {
     if (!displayed) return;
     const overlay = overlayRef.current;
     const card = cardRef.current;
+    const grid = gridRef.current;
+    const strip = stripRef.current;
     if (!overlay || !card) return;
+
+    const alreadyOpen = modalWasOpenRef.current;
+    modalWasOpenRef.current = true;
 
     if (reducedMotion()) {
       gsap.set(overlay, { autoAlpha: 1 });
@@ -136,24 +199,68 @@ export default function ProductsExplorer() {
       return;
     }
 
-    gsap.killTweensOf([overlay, card]);
+    if (alreadyOpen) {
+      return;
+    }
+
+    const els = [overlay, card, grid, strip].filter(Boolean) as HTMLElement[];
+    gsap.killTweensOf(els);
+
     gsap.set(overlay, { autoAlpha: 0 });
-    gsap.set(card, { autoAlpha: 0, y: 32, scale: 0.96 });
+    gsap.set(card, { autoAlpha: 0, y: 48, scale: 0.93 });
+    if (strip) gsap.set(strip, { yPercent: 100, autoAlpha: 1 });
+    if (grid) gsap.set(grid, { y: 0, scale: 1, autoAlpha: 1, filter: "saturate(1)" });
 
     const tl = gsap.timeline();
-    tl.to(overlay, { autoAlpha: 1, duration: 0.32, ease: "power2.out" });
-    tl.to(
-      card,
-      { autoAlpha: 1, y: 0, scale: 1, duration: 0.55, ease: "power3.out" },
-      "-=0.18"
-    );
+    tl.to(overlay, { autoAlpha: 1, duration: 0.5, ease: "power2.out" });
+    tl.to(card, { autoAlpha: 1, y: 0, scale: 1, duration: 0.8, ease: "back.out(1.2)" }, "-=0.4");
+
+    if (grid) {
+      tl.to(
+        grid,
+        {
+          y: 36,
+          scale: 0.96,
+          autoAlpha: 0.38,
+          filter: "saturate(0.78)",
+          duration: 0.5,
+          ease: "power2.in",
+        },
+        0
+      );
+    }
+    if (strip) {
+      tl.to(strip, { yPercent: 0, duration: 0.55, ease: "power3.out" }, 0.08);
+      const thumbs = strip.querySelectorAll<HTMLElement>(".modal-strip-thumb");
+      if (thumbs.length) {
+        tl.fromTo(
+          thumbs,
+          { y: 10, autoAlpha: 0, scale: 0.94 },
+          { y: 0, autoAlpha: 1, scale: 1, duration: 0.28, stagger: 0.04, ease: "power2.out" },
+          "-=0.35"
+        );
+      }
+    }
 
     return () => {
       tl.kill();
     };
   }, [displayed?.slug]);
 
-  /* Body lock + ESC */
+  /* Switching product while modal open — fluid content refresh */
+  useIsoLayoutEffect(() => {
+    if (!displayed || reducedMotion() || !cardRef.current) return;
+    const prev = swapSlugRef.current;
+    if (prev && prev !== displayed.slug) {
+      gsap.fromTo(
+        cardRef.current,
+        { y: 14, autoAlpha: 0.72, scale: 0.99 },
+        { y: 0, autoAlpha: 1, scale: 1, duration: 0.42, ease: "power3.out" }
+      );
+    }
+    swapSlugRef.current = displayed.slug;
+  }, [displayed?.slug]);
+
   useEffect(() => {
     document.body.style.overflow = displayed ? "hidden" : "";
     return () => {
@@ -169,7 +276,6 @@ export default function ProductsExplorer() {
     return () => window.removeEventListener("keydown", onKey);
   }, [displayed, closeModal]);
 
-  /* Close sort menu on outside click */
   useEffect(() => {
     const onClick = (e: MouseEvent) => {
       if (!(e.target as HTMLElement).closest(".sort-control")) setSortOpen(false);
@@ -180,8 +286,6 @@ export default function ProductsExplorer() {
     }
   }, [sortOpen]);
 
-  /* Animate the grid items each time the filter/search/sort changes. */
-  const gridRef = useRef<HTMLDivElement>(null);
   useIsoLayoutEffect(() => {
     const grid = gridRef.current;
     if (!grid) return;
@@ -192,6 +296,8 @@ export default function ProductsExplorer() {
       gsap.set(cards, { autoAlpha: 1, y: 0 });
       return;
     }
+
+    if (displayed) return;
 
     gsap.fromTo(
       cards,
@@ -206,11 +312,10 @@ export default function ProductsExplorer() {
         overwrite: "auto",
       }
     );
-  }, [list]);
+  }, [list, displayed]);
 
   return (
     <>
-      {/* Toolbar — search · sort · category */}
       <div className="explorer-toolbar">
         <label className="search-field" aria-label="Search products">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
@@ -313,30 +418,12 @@ export default function ProductsExplorer() {
         )}
       </div>
 
-      <div className="products-grid" ref={gridRef}>
+      <div
+        className={`products-grid${displayed ? " products-grid-modal-open" : ""}`}
+        ref={gridRef}
+      >
         {list.map((p) => (
-          <button
-            key={p.slug}
-            id={p.slug}
-            type="button"
-            className="product-card"
-            onClick={() => openProduct(p)}
-            aria-label={`View details for ${p.name}`}
-          >
-            <div className="media-wrap">
-              <span className="tag">{p.tag}</span>
-              <div className="media" style={{ backgroundImage: `url(${p.img})` }} />
-            </div>
-            <div className="body">
-              <h3>{p.name}</h3>
-              <p>{p.desc}</p>
-              <div className="foot">
-                <span className="more">
-                  View Details <Arrow size={14} />
-                </span>
-              </div>
-            </div>
-          </button>
+          <ProductCard key={p.slug} p={p} />
         ))}
       </div>
 
@@ -357,62 +444,85 @@ export default function ProductsExplorer() {
         </div>
       )}
 
-      {/* Modal */}
       {displayed && (
-        <div
-          ref={overlayRef}
-          className="modal-overlay open"
-          onClick={closeModal}
-          role="presentation"
-        >
+        <>
           <div
-            ref={cardRef}
-            className="modal modal-split"
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby="product-modal-title"
-            onClick={(e) => e.stopPropagation()}
+            ref={overlayRef}
+            className="modal-overlay open"
+            onClick={closeModal}
+            role="presentation"
           >
-            <div className="modal-split-media" style={{ backgroundImage: `url(${displayed.img})` }}>
-              <button
-                type="button"
-                className="modal-close"
-                onClick={closeModal}
-                aria-label="Close"
-              >
-                <Close size={18} />
-              </button>
-              <div className="modal-split-tag">{displayed.tag}</div>
-            </div>
-            <div className="modal-split-body">
-              <div className="modal-eyebrow">{displayed.category}</div>
-              <h3 id="product-modal-title">{displayed.name}</h3>
-              <div className="tagline">&ldquo;{displayed.tagline}&rdquo;</div>
-              <p className="modal-desc">{displayed.long}</p>
-
-              <div className="modal-highlights">
-                <span className="modal-section-lbl">Key Highlights</span>
-                <div className="highlight-tags">
-                  {displayed.highlights.map((h) => (
-                    <span className="tag" key={h}>{h}</span>
-                  ))}
-                </div>
-              </div>
-
-              <div className="modal-actions">
-                <Link
-                  href={`/contact?product=${encodeURIComponent(displayed.slug)}`}
-                  className="btn btn-primary"
-                >
-                  Send Enquiry <Arrow size={14} />
-                </Link>
-                <button type="button" className="btn btn-glass" onClick={closeModal}>
-                  Back
+            <div
+              ref={cardRef}
+              className="modal modal-split"
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="product-modal-title"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="modal-split-media" style={{ backgroundImage: `url(${displayed.img})` }}>
+                <button type="button" className="modal-close" onClick={closeModal} aria-label="Close">
+                  <Close size={18} />
                 </button>
+                <div className="modal-split-tag">{displayed.tag}</div>
+              </div>
+              <div className="modal-split-body">
+                <div className="modal-eyebrow">{displayed.category}</div>
+                <h3 id="product-modal-title">{displayed.name}</h3>
+                <div className="tagline">&ldquo;{displayed.tagline}&rdquo;</div>
+                <p className="modal-desc">{displayed.long}</p>
+
+                <div className="modal-highlights">
+                  <span className="modal-section-lbl">Key Highlights</span>
+                  <div className="highlight-tags">
+                    {displayed.highlights.map((h) => (
+                      <span className="tag" key={h}>
+                        {h}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="modal-actions">
+                  <Link
+                    href={`/contact?product=${encodeURIComponent(displayed.slug)}`}
+                    className="btn btn-primary"
+                  >
+                    Send Enquiry <Arrow size={14} />
+                  </Link>
+                  <button type="button" className="btn btn-glass" onClick={closeModal}>
+                    Back
+                  </button>
+                </div>
               </div>
             </div>
           </div>
-        </div>
+
+          <div
+            ref={stripRef}
+            className="modal-product-strip"
+            role="navigation"
+            aria-label="Browse products"
+          >
+            <div className="modal-product-strip-inner">
+              {list.map((p) => (
+                <button
+                  key={p.slug}
+                  type="button"
+                  className={`modal-strip-thumb${p.slug === displayed.slug ? " active" : ""}`}
+                  onClick={() => openProduct(p)}
+                  aria-current={p.slug === displayed.slug ? "true" : undefined}
+                >
+                  <span
+                    className="modal-strip-img"
+                    style={{ backgroundImage: `url(${p.img})` }}
+                  />
+                  <span className="modal-strip-name">{p.name}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+        </>
       )}
     </>
   );

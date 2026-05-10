@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Suspense } from "react";
+
 import PageHero from "../components/PageHero";
 import Reveal from "../components/Reveal";
 import ProductsExplorer from "./ProductsExplorer";
@@ -21,14 +21,12 @@ export default function ProductsPage() {
             Eight lines of <em>export-grade</em> Indian produce.
           </>
         }
-        description="Sourced from the most productive agricultural zones of South India. Each product is graded, processed and prepared to meet international market requirements."
+        description="From the most productive agricultural zones of South India. Each product is graded, processed and prepared to meet international market requirements."
       />
 
       <section>
         <div className="container">
-          <Suspense fallback={<div style={{ minHeight: 400 }} />}>
-            <ProductsExplorer />
-          </Suspense>
+          <ProductsExplorer />
         </div>
       </section>
 
@@ -40,7 +38,7 @@ export default function ProductsPage() {
                 <div>
                   <div className="eyebrow">Need a custom grade?</div>
                   <h2>
-                    Tell us your spec — <em>we&apos;ll source it.</em>
+                    Tell us your spec — <em>we&apos;ll match it.</em>
                   </h2>
                   <p>
                     If you need specific moisture content, shelf life, packaging

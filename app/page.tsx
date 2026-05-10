@@ -1,6 +1,10 @@
+"use client";
+
+import { useState } from "react";
 import Link from "next/link";
 import ProductCard from "./components/ProductCard";
 import Hero from "./components/Hero";
+import GlobalPresenceMap from "./components/GlobalPresenceMap";
 import {
   ScrollReveal,
   SectionHeading,
@@ -8,7 +12,6 @@ import {
   Marquee,
   AnimatedCounter,
 } from "./components/Motion";
-import { PRODUCTS } from "./components/products-data";
 import {
   Arrow,
   Globe,
@@ -32,9 +35,7 @@ export default function HomePage() {
       <Marquee30Strip />
       <StatsBlock />
       <AboutPreview />
-      <WhyChooseUs />
-      <GlobalRoutes />
-      <ProductsPreview />
+      <GlobalPresenceMap />
       <ProcessTimeline />
       <Testimonials />
       <FAQ />
@@ -51,7 +52,7 @@ function Marquee30Strip() {
     "IEC Approved",
     "Phyto-Sanitary",
     "ISO Audited",
-    "Direct Farmer Sourcing",
+    "Direct Farm Partnerships",
     "22+ Export Markets",
     "Tuticorin · Chennai · Cochin",
   ];
@@ -73,7 +74,7 @@ function StatsBlock() {
   const stats: { num: number; suffix?: string; label: string; desc: string }[] = [
     { num: 22, suffix: "+", label: "Export Markets", desc: "Active across the Middle East, SEA and Europe" },
     { num: 8, label: "Product Lines", desc: "Each tuned to international buyer specs" },
-    { num: 100, suffix: "%", label: "Direct Sourcing", desc: "Farmer-direct — no middlemen, full traceability" },
+    { num: 100, suffix: "%", label: "Farm-Direct Supply", desc: "Farmer-direct — no middlemen, full traceability" },
     { num: 24, suffix: "h", label: "Quote Window", desc: "First response within one business day" },
   ];
   return (
@@ -139,7 +140,7 @@ function AboutPreview() {
                   <div className="check"><Check /></div>
                   <div>
                     <strong>Deep-rooted farmer network</strong>
-                    <span>Direct sourcing across South India&apos;s most productive zones.</span>
+                    <span>Direct procurement across South India&apos;s most productive zones.</span>
                   </div>
                 </li>
                 <li>
@@ -172,197 +173,16 @@ function AboutPreview() {
   );
 }
 
-/* ============== Why Choose Us ============== */
-function WhyChooseUs() {
-  const items = [
-    { icon: <Shield />, title: "Uncompromised Quality", text: "Stringent checks at every stage — procurement to export — so you receive only the best." },
-    { icon: <Award />, title: "Certified Compliance", text: "FSSAI · APEDA · IEC. Documentation and clearances handled end-to-end for every shipment." },
-    { icon: <Truck />, title: "Seamless Logistics", text: "End-to-end shipping — packaging, paperwork and freight forwarding under one roof." },
-    { icon: <Users />, title: "Reliable Partnership", text: "Long-term buyer relationships grounded in transparency and consistent delivery." },
-    { icon: <Leaf />, title: "Direct From Source", text: "Procured directly from farmers — no middlemen, full traceability, fair pricing." },
-    { icon: <Globe />, title: "Global Reach", text: "Active across the Middle East, Southeast Asia, Europe and expanding markets." },
-    { icon: <Sparkles />, title: "Premium Grade", text: "Machine-graded, specification-matched produce — season after season, batch after batch." },
-    { icon: <FileCheck />, title: "Transparent Trade", text: "Pre-shipment samples, third-party lab reports and shipment-level updates on request." },
-  ];
 
-  return (
-    <section id="why-us">
-      <div className="container">
-        <div className="section-head">
-          <ScrollReveal>
-            <div>
-              <div className="eyebrow">Why Choose Us</div>
-              <h2 className="section-title" style={{ marginTop: 12 }}>
-                Built on trust.
-                <br />
-                <em>Engineered for global trade.</em>
-              </h2>
-              <Ornament />
-            </div>
-          </ScrollReveal>
-          <ScrollReveal delay={0.08}>
-            <p className="lead">
-              Eight commitments behind every Broad X Overseas shipment — what
-              international buyers expect, delivered consistently.
-            </p>
-          </ScrollReveal>
-        </div>
 
-        <div className="feature-grid">
-          {items.map((it, i) => (
-            <ScrollReveal key={it.title} delay={(i % 4) * 0.08}>
-              <div className="feature-card">
-                <div className="ico">{it.icon}</div>
-                <h3>{it.title}</h3>
-                <p>{it.text}</p>
-              </div>
-            </ScrollReveal>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
 
-/* ============== Global trade routes ============== */
-function GlobalRoutes() {
-  // Approximate normalized coordinates (% of viewBox 100x60) for pin placement
-  const regions: { name: string; markets: string; x: number; y: number }[] = [
-    { name: "Middle East", markets: "UAE · KSA · Oman · Qatar", x: 60, y: 38 },
-    { name: "Southeast Asia", markets: "Singapore · Malaysia · Indonesia", x: 76, y: 50 },
-    { name: "Europe", markets: "UK · Germany · Netherlands · France", x: 51, y: 24 },
-    { name: "Africa", markets: "Kenya · South Africa · Egypt", x: 55, y: 50 },
-    { name: "Americas", markets: "USA · Canada · expanding", x: 22, y: 30 },
-  ];
-  return (
-    <section className="bg-surface" id="routes">
-      <div className="container">
-        <div className="routes">
-          <div className="routes-grid">
-            <div>
-              <div className="eyebrow">Global Presence</div>
-              <h2 className="section-title" style={{ marginTop: 12 }}>
-                One supplier. <em>Five continents.</em>
-              </h2>
-              <Ornament />
-              <p className="lead" style={{ marginTop: 18 }}>
-                Active trade lanes from Tuticorin, Chennai and Cochin — to the
-                Middle East, Southeast Asia, Europe, Africa and the Americas.
-                Every container backed by full documentation and a single point
-                of contact.
-              </p>
-              <div className="region-list">
-                {regions.map((r) => (
-                  <div className="region-row" key={r.name}>
-                    <span className="name">
-                      <span className="pin" />
-                      {r.name}
-                    </span>
-                    <span className="meta">{r.markets}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
 
-            <ScrollReveal className="world-map">
-              <svg viewBox="0 0 100 60" aria-hidden="true">
-                <defs>
-                  <pattern id="dots" x="0" y="0" width="1.6" height="1.6" patternUnits="userSpaceOnUse">
-                    <circle cx="0.4" cy="0.4" r="0.18" fill="rgba(91,136,178,0.22)" />
-                  </pattern>
-                </defs>
-                {/* Continent silhouettes — simplified, recognizable shapes */}
-                <g fill="url(#dots)" stroke="rgba(91,136,178,0.18)" strokeWidth="0.1">
-                  {/* North America */}
-                  <path d="M 8,12 L 26,8 L 30,16 L 28,28 L 18,34 L 10,28 Z" />
-                  {/* South America */}
-                  <path d="M 22,36 L 30,34 L 32,46 L 26,56 L 22,52 Z" />
-                  {/* Europe */}
-                  <path d="M 46,12 L 56,10 L 58,18 L 52,22 L 46,20 Z" />
-                  {/* Africa */}
-                  <path d="M 48,24 L 58,24 L 62,40 L 56,52 L 50,50 L 46,36 Z" />
-                  {/* Asia */}
-                  <path d="M 58,8 L 84,10 L 90,22 L 82,30 L 70,28 L 60,22 Z" />
-                  {/* Australia */}
-                  <path d="M 78,42 L 90,42 L 92,50 L 84,52 L 78,48 Z" />
-                </g>
-                {/* Origin marker — Coimbatore, India */}
-                <circle cx="68" cy="28" r="0.7" fill="#FBF9E4" />
-                {/* Trade arcs to each region */}
-                <g fill="none" stroke="rgba(91,136,178,0.55)" strokeWidth="0.18" strokeDasharray="0.6 0.4">
-                  <path d="M 68 28 Q 64 18 51 24" />
-                  <path d="M 68 28 Q 65 32 60 38" />
-                  <path d="M 68 28 Q 72 38 76 50" />
-                  <path d="M 68 28 Q 60 40 55 50" />
-                  <path d="M 68 28 Q 45 18 22 30" />
-                </g>
-              </svg>
-              {/* Pin overlays */}
-              {regions.map((r) => (
-                <span
-                  key={r.name}
-                  className="pin-dot"
-                  style={{ left: `${r.x}%`, top: `${r.y}%` }}
-                />
-              ))}
-              {/* Origin pin */}
-              <span className="pin-dot" style={{ left: "68%", top: "47%" }} />
-            </ScrollReveal>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
 
-/* ============== Products preview ============== */
-function ProductsPreview() {
-  return (
-    <section id="products">
-      <div className="container">
-        <div className="section-head">
-          <ScrollReveal>
-            <div>
-              <div className="eyebrow">Our Catalogue</div>
-              <h2 className="section-title" style={{ marginTop: 12 }}>
-                Eight lines of <em>export-grade</em> Indian produce.
-              </h2>
-              <Ornament />
-            </div>
-          </ScrollReveal>
-          <ScrollReveal delay={0.08}>
-            <p className="lead">
-              Sourced from South India&apos;s most productive agricultural zones.
-              Every product is graded, processed and prepared to meet
-              international standards.
-            </p>
-          </ScrollReveal>
-        </div>
-
-        <div className="products-grid">
-          {PRODUCTS.map((p, i) => (
-            <ScrollReveal key={p.slug} delay={(i % 4) * 0.06}>
-              <ProductCard p={p} />
-            </ScrollReveal>
-          ))}
-        </div>
-
-        <ScrollReveal delay={0.1}>
-          <div style={{ display: "flex", justifyContent: "center", marginTop: 40 }}>
-            <Link href="/products" className="btn btn-outline">
-              View all products <Arrow size={14} />
-            </Link>
-          </div>
-        </ScrollReveal>
-      </div>
-    </section>
-  );
-}
 
 /* ============== Process timeline (4 stops) ============== */
 function ProcessTimeline() {
   const steps = [
-    { n: "01", icon: <Leaf />, title: "Source", text: "Direct relationships with verified farmer partners across Coimbatore." },
+    { n: "01", icon: <Leaf />, title: "Farm Intake", text: "Direct relationships with verified farmer partners across Coimbatore." },
     { n: "02", icon: <Sparkles />, title: "Grade & Process", text: "Machine-graded by size, colour, moisture; FSSAI hygiene protocols." },
     { n: "03", icon: <Container />, title: "Pack & Document", text: "Moisture-controlled packing, COAs, phyto-sanitary, packing lists." },
     { n: "04", icon: <Anchor />, title: "Ship & Trace", text: "Multi-modal logistics from Tuticorin · Chennai · Cochin. Full traceability." },
@@ -411,7 +231,7 @@ function Testimonials() {
     },
     {
       q: "What sets Broad X apart is the after-ship feedback loop. They log issues by batch and you can feel the improvement next season.",
-      who: "Sourcing Manager",
+      who: "Trade Manager",
       role: "Spice trader · Germany",
       a: "MK",
     },
@@ -460,6 +280,31 @@ function Testimonials() {
 }
 
 /* ============== FAQ ============== */
+function FAQItem({ q, a }: { q: string; a: string }) {
+  const [isOpen, setIsOpen] = useState(false);
+
+  return (
+    <div className={`faq-item${isOpen ? " open" : ""}`}>
+      <button
+        type="button"
+        className="faq-trigger"
+        onClick={() => setIsOpen(!isOpen)}
+        aria-expanded={isOpen}
+      >
+        <span>{q}</span>
+        <span className="icn">
+          <Plus size={14} />
+        </span>
+      </button>
+      <div className="faq-content">
+        <div className="ans-inner">
+          <div className="ans-text">{a}</div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function FAQ() {
   const items = [
     {
@@ -483,13 +328,18 @@ function FAQ() {
       a: "Yes — branded packaging, retail-ready bags, bulk drums and food-grade liners. Share your brand assets and target unit size and we'll spec it with our packing partners.",
     },
   ];
+
   return (
     <section className="bg-surface" id="faq">
       <div className="container">
         <ScrollReveal>
           <SectionHeading
             eyebrow="Frequently Asked"
-            title={<>What <em>buyers ask first.</em></>}
+            title={
+              <>
+                What <em>buyers ask first.</em>
+              </>
+            }
             description="The five questions our team handles most often before a first order."
             align="center"
           />
@@ -497,13 +347,7 @@ function FAQ() {
         <ScrollReveal>
           <div className="faq-list" style={{ marginTop: 40 }}>
             {items.map((f) => (
-              <details className="faq-item" key={f.q}>
-                <summary>
-                  <span>{f.q}</span>
-                  <span className="icn"><Plus size={14} /></span>
-                </summary>
-                <div className="ans">{f.a}</div>
-              </details>
+              <FAQItem key={f.q} q={f.q} a={f.a} />
             ))}
           </div>
         </ScrollReveal>
@@ -521,7 +365,7 @@ function CTASection() {
           <div className="cta-strip">
             <div className="grid">
               <div>
-                <div className="eyebrow">Ready to source with confidence?</div>
+                <div className="eyebrow">Ready to ship with confidence?</div>
                 <h2>
                   Your reliable supply partner is{" "}
                   <em>just a message away.</em>

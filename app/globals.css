@@ -1,3 +1,5 @@
+@import url('https://api.fontshare.com/v2/css?f[]=clash-display@300,400,500,600,700&f[]=general-sans@200,300,400,500,600,700&display=swap');
+
 /* =========================================================
    BROAD X OVERSEAS — Global Design System
    Midnight × Ocean × Pearl × Noir · Glassmorphism
@@ -38,15 +40,16 @@
   --shadow-ocean: 0 10px 30px rgba(91, 136, 178, 0.22);
   --shadow-ring-focus: 0 0 0 3px rgba(91, 136, 178, 0.35);
 
-  /* ---- Type families (next/font variables) ---- */
-  --font-serif: var(--font-fraunces), 'Playfair Display', Georgia, serif;
-  --font-sans:  var(--font-inter), ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-  --font-mono:  var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+  /* ---- Type families ---- */
+  --font-serif: 'Clash Display', var(--font-inter), sans-serif;
+  --font-italic: 'Big Caslon CC', 'Big Caslon', 'Playfair Display', Georgia, serif;
+  --font-sans: 'General Sans', var(--font-inter), ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-mono:  ui-monospace, SFMono-Regular, Menlo, monospace;
 
   /* ---- Type scale (controlled, not oversized) ---- */
-  --fs-hero:   clamp(2.5rem, 5.5vw, 4.25rem);
-  --fs-h1:     clamp(1.875rem, 3.4vw, 2.625rem);
-  --fs-h2:     clamp(1.5rem, 2.4vw, 2rem);
+  --fs-hero:   clamp(2rem, 4vw, 3.5rem);
+  --fs-h1:     clamp(1.75rem, 3vw, 2.5rem);
+  --fs-h2:     clamp(1.375rem, 2.2vw, 1.875rem);
   --fs-h3:     1.25rem;
   --fs-h4:     1.0625rem;
   --fs-lead:   1rem;
@@ -92,9 +95,10 @@ body {
   font-family: var(--font-sans);
   color: var(--fg-1);
   background:
-    radial-gradient(1200px 600px at 80% -10%, rgba(91, 136, 178, 0.18), transparent 60%),
-    radial-gradient(900px 600px at -10% 40%, rgba(18, 44, 79, 0.45), transparent 60%),
-    linear-gradient(180deg, var(--noir) 0%, #050B14 35%, var(--midnight-4) 100%);
+    radial-gradient(1400px 720px at 85% -5%, rgba(91, 136, 178, 0.08), transparent 62%),
+    radial-gradient(1000px 640px at -8% 45%, rgba(18, 44, 79, 0.15), transparent 58%),
+    radial-gradient(800px 500px at 50% 100%, rgba(251, 249, 228, 0.03), transparent 55%),
+    linear-gradient(165deg, var(--noir) 0%, #060d16 40%, var(--midnight-3) 70%, var(--midnight-4) 100%);
   background-attachment: fixed;
   font-size: var(--fs-body);
   line-height: var(--lh-normal);
@@ -106,9 +110,9 @@ img { max-width: 100%; display: block; }
 a { color: inherit; text-decoration: none; }
 button { font: inherit; }
 
-.container { max-width: var(--container); margin: 0 auto; padding: 0 var(--gutter); }
-.container-narrow { max-width: var(--container-narrow); margin: 0 auto; padding: 0 var(--gutter); }
-.container-form { max-width: var(--container-form); margin: 0 auto; padding: 0 var(--gutter); }
+.container { width: 100%; max-width: var(--container); margin: 0 auto; padding: 0 var(--gutter); }
+.container-narrow { width: 100%; max-width: var(--container-narrow); margin: 0 auto; padding: 0 var(--gutter); }
+.container-form { width: 100%; max-width: var(--container-form); margin: 0 auto; padding: 0 var(--gutter); }
 
 /* ---------- Typography ---------- */
 h1, h2, h3, h4 { margin: 0; color: var(--fg-1); text-wrap: balance; }
@@ -134,7 +138,7 @@ h1, h2, h3, h4 { margin: 0; color: var(--fg-1); text-wrap: balance; }
   font-size: var(--fs-h1); line-height: 1.12; letter-spacing: -0.02em;
   color: var(--fg-1);
 }
-.section-title em { font-style: italic; font-weight: 400; color: var(--ocean-2); }
+.section-title em, em { font-family: var(--font-italic); font-style: italic; font-weight: 400; color: var(--ocean-2); }
 .lead {
   font-size: var(--fs-lead); line-height: var(--lh-relaxed);
   color: var(--fg-2); max-width: 60ch; text-wrap: pretty;
@@ -142,7 +146,7 @@ h1, h2, h3, h4 { margin: 0; color: var(--fg-1); text-wrap: balance; }
 p { color: var(--fg-2); line-height: var(--lh-relaxed); margin: 0 0 var(--space-4); }
 
 /* ---------- Sections ---------- */
-section { padding: clamp(40px, 5.5vw, 68px) 0; position: relative; }
+section { padding: clamp(28px, 4.5vw, 52px) 0; position: relative; }
 .section-head {
   display: grid; grid-template-columns: 1fr auto; gap: 24px;
   align-items: end; margin-bottom: 32px;
@@ -200,11 +204,41 @@ section { padding: clamp(40px, 5.5vw, 68px) 0; position: relative; }
   .btn { padding: 14px 24px; font-size: 14px; }
 }
 .btn-primary {
-  background: var(--ocean);
-  color: #0A1A2E;
-  box-shadow: var(--shadow-ocean);
+  background: rgba(251, 249, 228, 0.92);
+  color: #050E1F !important;
+  font-weight: 600;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(251, 249, 228, 0.18), inset 0 1px 0 rgba(255, 255, 255, 1);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
 }
-.btn-primary:hover { background: var(--ocean-2); transform: translateY(-2px); box-shadow: 0 14px 38px rgba(91, 136, 178, 0.34); }
+.btn-primary::after {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: var(--shine-pos, -150%);
+  width: 100%;
+  height: 200%;
+  background: linear-gradient(
+    115deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0) 25%,
+    rgba(165, 220, 255, 0.85) 50%,
+    rgba(255, 255, 255, 0) 75%,
+    transparent 100%
+  );
+  z-index: 2;
+  transform: rotate(25deg);
+  pointer-events: none;
+}
+.btn-primary:hover {
+  background: #FFFFFF !important;
+  color: #050E1F !important;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(251, 249, 228, 0.45), inset 0 1px 0 rgba(255, 255, 255, 1);
+}
 .btn-glass {
   background: rgba(255, 255, 255, 0.06);
   border: 1px solid rgba(255, 255, 255, 0.14);

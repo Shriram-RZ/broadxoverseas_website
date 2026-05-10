@@ -13,7 +13,7 @@ type Props = {
 };
 
 export default function CTAStrip({
-  eyebrow = "Ready to source with confidence?",
+  eyebrow = "Ready to ship with confidence?",
   title = (
     <>
       Your reliable supply partner is{" "}

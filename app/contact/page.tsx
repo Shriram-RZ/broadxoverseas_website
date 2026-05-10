@@ -7,7 +7,7 @@ import { Phone, Mail, Globe, Pin, Clock, Calendar } from "../components/Icons";
 export const metadata = {
   title: "Contact — Broad X Overseas",
   description:
-    "Reach Broad X Overseas for sourcing, samples, pricing and partnerships. We typically respond within one business day.",
+    "Reach Broad X Overseas for enquiries, samples, pricing and partnerships. We typically respond within one business day.",
 };
 
 export default function ContactPage() {
@@ -17,7 +17,7 @@ export default function ContactPage() {
         crumbs={[{ label: "Home", href: "/" }, { label: "Contact Us" }]}
         title={
           <>
-            Let&apos;s talk <em>sourcing.</em>
+            Let&apos;s talk <em>exports.</em>
           </>
         }
         description="Your reliable supply partner is just a message away. Connect with our team to discuss your requirements, request samples, or get a competitive quotation."
@@ -31,7 +31,7 @@ export default function ContactPage() {
               <div className="contact-side-card">
                 <div className="eyebrow">Direct Lines</div>
                 <h2 className="contact-side-title">
-                  Talk to a real <em>sourcing lead.</em>
+                  Talk to a real <em>account lead.</em>
                 </h2>
                 <Ornament />
 

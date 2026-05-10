@@ -114,7 +114,7 @@ export default function AboutPage() {
                     <div className="check"><Check /></div>
                     <div>
                       <strong>End-to-end accountability</strong>
-                      <span>Sourcing, quality, logistics and documentation — all under one roof.</span>
+                      <span>Procurement, quality, logistics and documentation — all under one roof.</span>
                     </div>
                   </li>
                 </ul>
@@ -139,7 +139,7 @@ export default function AboutPage() {
             </ScrollReveal>
             <ScrollReveal delay={0.08}>
               <p className="lead">
-                The principles that decide who we source from, how we package and
+                The principles that decide which farms we partner with, how we package and
                 what we put in writing.
               </p>
             </ScrollReveal>
@@ -180,7 +180,7 @@ export default function AboutPage() {
             <Reveal delay={1}>
               <p className="lead">
                 The principles that shape every decision — from which farm we
-                source from to how a crate leaves the port.
+                partner with to how a crate leaves the port.
               </p>
             </Reveal>
           </div>
@@ -257,7 +257,7 @@ const WHY_ITEMS = [
   },
   {
     icon: <Leaf />,
-    title: "Direct From Source",
+    title: "Direct From Farm Gate",
     text: "Procured directly from farmers — no middlemen, full traceability, fair pricing.",
   },
   {

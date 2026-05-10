@@ -4,7 +4,7 @@ import CTAStrip from "../components/CTAStrip";
 export const metadata = {
   title: "Gallery — Broad X Overseas",
   description:
-    "Scenes from the source: farms, harvests, packaging and ports that power Broad X Overseas' global agricultural exports.",
+    "Scenes from the field: farms, harvests, packaging and ports that power Broad X Overseas' global agricultural exports.",
 };
 
 const IMAGES: Array<{ src: string; title: string; tag: string; tall?: boolean }> = [
@@ -32,7 +32,7 @@ const IMAGES: Array<{ src: string; title: string; tag: string; tall?: boolean }>
   {
     src: "https://images.unsplash.com/photo-1625246333195-78d9c38ad449?auto=format&fit=crop&w=1200&q=80",
     title: "Farmers sorting turmeric roots",
-    tag: "Sourcing",
+    tag: "Field work",
     tall: true,
   },
   {
@@ -80,7 +80,7 @@ export default function GalleryPage() {
         crumbs={[{ label: "Home", href: "/" }, { label: "Gallery" }]}
         title={
           <>
-            Scenes from <em>the source.</em>
+            Scenes from <em>the field.</em>
           </>
         }
         description="Fields, harvests, processing lines and ports — the everyday workflow behind every Broad X Overseas shipment."
@@ -108,7 +108,7 @@ export default function GalleryPage() {
       </section>
 
       <CTAStrip
-        eyebrow="Want to visit the source?"
+        eyebrow="Want to visit our operations?"
         title={<>Buyers are welcome — <em>walk our facility.</em></>}
         description="Planning a procurement visit to India? We'll arrange a facility tour, farm visits and tastings across the Coimbatore belt."
         primaryLabel="Plan a visit"

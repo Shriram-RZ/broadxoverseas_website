@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useLayoutEffect, useRef } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Arrow, Globe, Shield, Container } from "./Icons";
@@ -9,45 +9,23 @@ import { MagneticHover } from "./Motion";
 
 const isBrowser = typeof window !== "undefined";
 const useIsoLayoutEffect = isBrowser ? useLayoutEffect : useEffect;
-const reduced = () =>
-  isBrowser && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 export default function Hero() {
   const root = useRef<HTMLDivElement>(null);
   const bgRef = useRef<HTMLDivElement>(null);
-  const wordsRef = useRef<HTMLDivElement>(null);
+  const [mounted, setMounted] = useState(false);
+
+  /* Mark mounted so CSS entrance class triggers */
+  useEffect(() => {
+    const t = setTimeout(() => setMounted(true), 80);
+    return () => clearTimeout(t);
+  }, []);
 
   useIsoLayoutEffect(() => {
     if (!isBrowser) return;
     gsap.registerPlugin(ScrollTrigger);
-    if (reduced()) return;
 
     const ctx = gsap.context(() => {
-      // ---- Word-by-word kinetic reveal ----
-      const words = wordsRef.current?.querySelectorAll<HTMLElement>(".w");
-      if (words && words.length > 0) {
-        gsap.set(words, { yPercent: 110, opacity: 0 });
-        gsap.to(words, {
-          yPercent: 0,
-          opacity: 1,
-          duration: 1.1,
-          ease: "power4.out",
-          stagger: 0.05,
-          delay: 0.15,
-        });
-      }
-
-      // ---- Hero items stagger (eyebrow, lead, ctas, cards) ----
-      gsap.from("[data-hero-item]", {
-        autoAlpha: 0,
-        y: 24,
-        duration: 1.0,
-        ease: "power3.out",
-        stagger: 0.08,
-        delay: 0.35,
-      });
-
-      // ---- Parallax background on scroll ----
       gsap.to(bgRef.current, {
         yPercent: 18,
         ease: "none",
@@ -59,10 +37,9 @@ export default function Hero() {
         },
       });
 
-      // ---- Hero content fades & lifts as user scrolls past ----
-      gsap.to(".hero-content", {
-        yPercent: -8,
-        autoAlpha: 0.55,
+      gsap.to(".hero-stack", {
+        yPercent: -6,
+        autoAlpha: 0.58,
         ease: "none",
         scrollTrigger: {
           trigger: root.current,
@@ -71,34 +48,17 @@ export default function Hero() {
           scrub: true,
         },
       });
-
-      // ---- Scroll cue bob ----
-      gsap.to(".hero-scroll", {
-        y: 6,
-        duration: 1.6,
-        repeat: -1,
-        yoyo: true,
-        ease: "sine.inOut",
-      });
     }, root);
 
     return () => ctx.revert();
   }, []);
 
-  // Split heading into spans so each word can rise independently.
-  const Words = ({ text }: { text: string }) => (
-    <span className="words" aria-label={text}>
-      {text.split(" ").map((w, i) => (
-        <span key={`${w}-${i}`} className="w-wrap">
-          <span className="w">{w}</span>
-          {i < text.split(" ").length - 1 ? " " : ""}
-        </span>
-      ))}
-    </span>
-  );
-
   return (
-    <section className="hero" id="home" ref={root}>
+    <section
+      className={`hero hero-reference ${mounted ? "hero-entered" : ""}`}
+      id="home"
+      ref={root}
+    >
       <div className="hero-bg" ref={bgRef}>
         <video
           className="hero-video"
@@ -114,71 +74,78 @@ export default function Hero() {
       </div>
       <div className="hero-overlay" />
 
-      <div className="hero-content">
-        <div className="container">
-          <span className="hero-eyebrow" data-hero-item>
-            <span className="dot" /> Global Agricultural Exports
-          </span>
 
-          <h1 ref={wordsRef}>
-            <span className="line">
-              <Words text="GLOBAL REACH." />
-            </span>
-            <span className="line">
-              <Words text="DELIVERING " />
-              <span className="accent">
-                <Words text="VALUE." />
-              </span>
-            </span>
-          </h1>
+      <div className="hero-stack">
+        {/* ---- Left-aligned text content ---- */}
+        <div className="container hero-content-wrap">
+          <div className="hero-main">
+            {/* Eyebrow badge */}
+            <div className="hero-eyebrow hero-anim hero-anim-1">
+              <span className="dot" />
+              Trusted Agricultural Exporter
+            </div>
 
-          <p className="lead" data-hero-item>
-            Premium Agricultural Exports from South India — Direct. Reliable.
-            Certified. Fair.
-          </p>
+            <h1 className="hero-title-serif hero-anim hero-anim-2">
+              <span className="line">Global Reach,</span>
+              <span className="line">Delivering <span className="accent-text">Value</span></span>
+            </h1>
 
-          <div className="hero-cta" data-hero-item>
-            <MagneticHover strength={0.15}>
-              <Link href="/contact" className="btn btn-primary">
-                Get Quote <Arrow />
-              </Link>
-            </MagneticHover>
-            <MagneticHover strength={0.15}>
-              <Link href="/contact" className="btn btn-glass">
-                Contact Us
-              </Link>
-            </MagneticHover>
-          </div>
-        </div>
-      </div>
+            <p className="hero-elegant-line hero-anim hero-anim-3">
+              Premium produce, elevated for international markets.
+            </p>
 
-      <div className="container hero-bottom-section">
-        <div className="hero-bottom-text" data-hero-item>
-          <h3>Broad X Overseas</h3>
-          <p>
-            Your trusted partner in global agricultural trade, delivering premium produce directly from South India to the world.
-          </p>
-        </div>
-        <div className="hero-cards" data-hero-item>
-          <div className="hero-card">
-            <div className="ico"><Globe size={18} /></div>
-            <div>
-              <div className="t">Global Network</div>
-              <div className="d">22+ export markets</div>
+            <p className="lead hero-lead hero-anim hero-anim-4">
+              Broad X Overseas connects buyers worldwide with dependable agricultural
+              exports from South India — transparent procurement, certified quality,
+              and end-to-end logistics you can trust.
+            </p>
+
+            <div className="hero-cta hero-anim hero-anim-5">
+              <MagneticHover strength={0.15}>
+                <Link href="/products" className="btn btn-outline hero-cta-ghost">
+                  Our Products
+                </Link>
+              </MagneticHover>
+              <MagneticHover strength={0.15}>
+                <Link href="/contact" className="btn btn-primary">
+                  Get Quote <Arrow />
+                </Link>
+              </MagneticHover>
             </div>
           </div>
-          <div className="hero-card">
-            <div className="ico"><Shield size={18} /></div>
-            <div>
-              <div className="t">Quality Assured</div>
-              <div className="d">FSSAI · APEDA · IEC</div>
-            </div>
-          </div>
-          <div className="hero-card">
-            <div className="ico"><Container size={18} /></div>
-            <div>
-              <div className="t">Reliable Logistics</div>
-              <div className="d">End-to-end shipping</div>
+        </div>
+
+        {/* ---- Bottom glass stat cards ---- */}
+        <div className="hero-bottom-strip hero-anim hero-anim-6">
+          <div className="container">
+            <div className="hero-three-boxes">
+              <div className="hero-card">
+                <div className="ico">
+                  <Globe size={20} />
+                </div>
+                <div>
+                  <div className="t">Global Network</div>
+                  <div className="d">22+ export markets</div>
+                </div>
+              </div>
+              <div className="hero-card">
+                <div className="ico">
+                  <Shield size={20} />
+                </div>
+                <div>
+                  <div className="t">Quality Assured</div>
+                  <div className="d">FSSAI · APEDA · IEC</div>
+                </div>
+              </div>
+              <div className="hero-card">
+                <div className="ico">
+                  <Container size={20} />
+                </div>
+                <div>
+                  <div className="t">Reliable Logistics</div>
+                  <div className="d">End-to-end shipping</div>
+                </div>
+              </div>
             </div>
           </div>
         </div>

@@ -23,6 +23,10 @@ const make = (path: string, defaultSize = 20, defaultStroke = 1.8) =>
     );
   };
 
+export const HomeIcon = make(
+  "M3 10.5L12 4l9 6.5V20a1 1 0 01-1 1h-5v-8H9v8H4a1 1 0 01-1-1V10.5z",
+  22
+);
 export const Arrow = make("M5 12h14M13 5l7 7-7 7", 16);
 export const ArrowLeft = make("M19 12H5M11 5l-7 7 7 7", 16);
 export const Check = make("M5 12l5 5L20 7", 12, 2.5);
