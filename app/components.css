@@ -280,10 +280,10 @@
   pointer-events: none;
   background:
     linear-gradient(115deg,
-      rgba(7, 15, 28, 0.72) 0%,
-      rgba(18, 44, 79, 0.52) 38%,
-      rgba(91, 136, 178, 0.18) 68%,
-      rgba(251, 249, 228, 0.06) 100%),
+      rgba(255, 255, 255, 0.364) 0%,
+      rgba(33, 81, 144, 0.227) 38%,
+      rgba(91, 136, 178, 0.075) 68%,
+      rgba(251, 249, 228, 0) 100%),
     linear-gradient(180deg,
       rgba(0, 0, 0, 0.35) 0%,
       rgba(0, 0, 0, 0.10) 32%,
@@ -358,7 +358,7 @@
   pointer-events: auto;
 }
 
-/* Reference layout — bold sans headline like campaign mock */
+/* Reference layout — bold sans headline like camepaign mock */
 .hero-reference .hero-title-sans {
   font-family: var(--font-sans);
   font-weight: 700;

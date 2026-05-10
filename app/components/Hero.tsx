@@ -24,34 +24,10 @@ export default function Hero() {
   useIsoLayoutEffect(() => {
     if (!isBrowser) return;
     gsap.registerPlugin(ScrollTrigger);
-
-    const ctx = gsap.context(() => {
-      gsap.to(bgRef.current, {
-        yPercent: 18,
-        ease: "none",
-        scrollTrigger: {
-          trigger: root.current,
-          start: "top top",
-          end: "bottom top",
-          scrub: true,
-        },
-      });
-
-      gsap.to(".hero-stack", {
-        yPercent: -6,
-        autoAlpha: 0.58,
-        ease: "none",
-        scrollTrigger: {
-          trigger: root.current,
-          start: "top top",
-          end: "bottom top",
-          scrub: true,
-        },
-      });
-    }, root);
-
-    return () => ctx.revert();
   }, []);
+
+  // Detect mobile device
+  const isMobile = typeof window !== "undefined" && window.innerWidth <= 760;
 
   return (
     <section
@@ -60,20 +36,29 @@ export default function Hero() {
       ref={root}
     >
       <div className="hero-bg" ref={bgRef}>
-        <video
-          className="hero-video"
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="auto"
-        >
-          <source src="/hero_video.mp4" type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
+        {isMobile ? (
+          <img
+            src="/hero_mobile.jpg"
+            alt="Broad X Overseas Hero"
+            className="hero-video"
+            style={{ objectFit: "cover", width: "100%", height: "100%" }}
+            loading="lazy"
+          />
+        ) : (
+          <video
+            className="hero-video"
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="auto"
+          >
+            <source src="/hero_video.mp4" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+        )}
       </div>
       <div className="hero-overlay" />
-
 
       <div className="hero-stack">
         {/* ---- Left-aligned text content ---- */}

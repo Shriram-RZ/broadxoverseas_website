@@ -28,6 +28,7 @@ export default function RootLayout({
       className={`${inter.variable}`}
     >
       <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
         <noscript>
           <style>{`.reveal,[data-hero-item]{opacity:1!important;transform:none!important;visibility:visible!important;}`}</style>
         </noscript>

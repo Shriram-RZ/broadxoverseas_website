@@ -37,7 +37,7 @@ export default function HomePage() {
       <AboutPreview />
       <GlobalPresenceMap />
       <ProcessTimeline />
-      <Testimonials />
+      
       <FAQ />
       <CTASection />
     </>
