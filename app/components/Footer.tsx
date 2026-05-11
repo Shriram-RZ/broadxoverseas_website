@@ -3,7 +3,7 @@ import { Mail } from "./Icons";
 
 export default function Footer() {
   return (
-    <footer className="footer">
+    <footer className="footer on-dark">
       <div className="container">
         <div className="footer-grid">
           <div>

@@ -31,7 +31,7 @@ export default function Hero() {
 
   return (
     <section
-      className={`hero hero-reference ${mounted ? "hero-entered" : ""}`}
+      className={`hero hero-reference on-dark ${mounted ? "hero-entered" : ""}`}
       id="home"
       ref={root}
     >

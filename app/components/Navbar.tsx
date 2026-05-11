@@ -67,7 +67,7 @@ export default function Navbar() {
 
   return (
     <>
-      <header className={`nav${scrolled ? " scrolled" : ""}`}>
+      <header className={`nav on-dark${scrolled ? " scrolled" : ""}`}>
         <div className="container">
           <div className="nav-inner">
             <Link href="/" className="logo" aria-label="Broad X Overseas — Home">
@@ -119,7 +119,7 @@ export default function Navbar() {
         aria-hidden={!open}
       />
       <aside
-        className={`nav-drawer${open ? " open" : ""}`}
+        className={`nav-drawer on-dark${open ? " open" : ""}`}
         role="dialog"
         aria-label="Navigation"
         aria-hidden={!open}
