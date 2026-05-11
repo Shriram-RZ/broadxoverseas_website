@@ -423,7 +423,7 @@ export default function ProductsExplorer() {
         ref={gridRef}
       >
         {list.map((p) => (
-          <ProductCard key={p.slug} p={p} />
+          <ProductCard key={p.slug} p={p} onOpen={() => openProduct(p)} />
         ))}
       </div>
 

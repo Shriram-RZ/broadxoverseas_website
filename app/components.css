@@ -283,12 +283,7 @@
       rgba(255, 255, 255, 0.364) 0%,
       rgba(33, 81, 144, 0.227) 38%,
       rgba(91, 136, 178, 0.075) 68%,
-      rgba(251, 249, 228, 0) 100%),
-    linear-gradient(180deg,
-      rgba(0, 0, 0, 0.35) 0%,
-      rgba(0, 0, 0, 0.10) 32%,
-      transparent 58%,
-      rgba(5, 14, 31, 0.65) 100%);
+      rgba(251, 249, 228, 0) 100%);
 }
 
 .hero-stack {
@@ -1217,13 +1212,13 @@
 .product-card h3 {
   font-size: 16px;
   font-weight: 600;
-  color: var(--fg-1);
+  color: var(--midnight-4);
   letter-spacing: -0.005em;
 }
 
 .product-card p {
   font-size: 13px;
-  color: var(--fg-3);
+  color: var(--midnight-3);
   line-height: 1.55;
   margin: 0;
   display: -webkit-box;
@@ -1289,6 +1284,7 @@
 
 .modal-overlay.open {
   visibility: visible;
+  opacity: 1;
 }
 
 .modal {
@@ -1779,10 +1775,10 @@
 
 /* ============= CTA strip ============= */
 .cta-strip {
-  background: linear-gradient(135deg, rgba(18, 44, 79, 0.55), rgba(91, 136, 178, 0.18));
+  background: linear-gradient(135deg, rgba(251, 249, 228, 0.92), rgba(227, 236, 248, 0.95));
   -webkit-backdrop-filter: blur(18px) saturate(170%);
   backdrop-filter: blur(18px) saturate(170%);
-  border: 1px solid var(--glass-border-strong);
+  border: 1px solid rgba(18, 44, 79, 0.08);
   border-radius: var(--r-2xl);
   padding: 36px;
   position: relative;
@@ -1825,17 +1821,17 @@
   font-size: clamp(1.625rem, 3vw, 2.25rem);
   line-height: 1.15;
   letter-spacing: -0.02em;
-  color: var(--fg-1);
+  color: var(--midnight-4);
 }
 
 .cta-strip h2 em {
   font-style: italic;
   font-weight: 400;
-  color: var(--ocean-2);
+  color: var(--ocean-deep);
 }
 
 .cta-strip p {
-  color: var(--fg-2);
+  color: rgba(18, 44, 79, 0.88);
   margin: 14px 0 0;
   font-size: 14.5px;
   line-height: 1.65;
@@ -1856,7 +1852,7 @@
 }
 
 .cta-strip .eyebrow {
-  color: var(--ocean-2);
+  color: var(--midnight-4);
   margin-bottom: 12px;
 }
 
@@ -1865,6 +1861,8 @@
   position: relative;
   padding: calc(var(--nav-height) + 32px) 0 32px;
   overflow: hidden;
+  background: linear-gradient(175deg, rgba(255, 255, 255, 1), rgba(251, 249, 228, 0.98));
+  color: var(--midnight-4);
 }
 
 .page-hero::before {
@@ -1873,8 +1871,8 @@
   inset: 0;
   pointer-events: none;
   background:
-    radial-gradient(700px 360px at 80% 0%, rgba(91, 136, 178, 0.18), transparent 60%),
-    linear-gradient(180deg, rgba(9, 26, 48, 0.4) 0%, transparent 100%);
+    radial-gradient(700px 360px at 80% 0%, rgba(255, 255, 255, 0.95), transparent 55%),
+    radial-gradient(900px 420px at 12% 20%, rgba(251, 249, 228, 0.30), transparent 52%);
 }
 
 .page-hero .inner {
@@ -1899,10 +1897,14 @@
 }
 
 .page-hero p {
-  color: var(--fg-2);
+  color: var(--midnight-3);
   font-size: 16px;
   max-width: 60ch;
   line-height: 1.65;
+}
+
+.page-hero h1 {
+  color: var(--midnight-4);
 }
 
 .page-hero .crumbs {
@@ -1913,19 +1915,19 @@
   letter-spacing: .14em;
   text-transform: uppercase;
   font-weight: 600;
-  color: var(--ocean-2);
+  color: var(--midnight-3);
 }
 
 .page-hero .crumbs a {
-  color: var(--fg-3);
+  color: var(--midnight-4);
 }
 
 .page-hero .crumbs a:hover {
-  color: var(--fg-1);
+  color: var(--ocean-2);
 }
 
 .page-hero .crumbs .sep {
-  color: var(--fg-4);
+  color: var(--midnight-3);
 }
 
 /* ============= Contact form ============= */
@@ -2821,7 +2823,10 @@
 }
 
 .bg-deep {
-  background: rgba(0, 0, 0, 0.35);
+  background:
+    linear-gradient(175deg, rgba(251, 249, 228, 0.95) 0%, rgba(238, 244, 248, 0.88) 42%, rgba(255, 255, 255, 0.85) 100%);
+  position: relative;
+  color: var(--midnight);
 }
 
 /* ============= Ornament + Section heading ============= */
