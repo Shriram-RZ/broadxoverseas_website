@@ -50,11 +50,13 @@ function Marquee30Strip() {
     "FSSAI Certified",
     "APEDA Registered",
     "IEC Approved",
-    "Phyto-Sanitary",
-    "ISO Audited",
-    "Direct Farm Partnerships",
+    "Phytosanitary Certified",
+    "Export-Grade Quality",
     "22+ Export Markets",
     "Tuticorin · Chennai · Cochin",
+    "Third-Party Lab Tested",
+    "Pre-Shipment Samples",
+    "Custom Packaging",
   ];
   return (
     <section className="bg-deep" style={{ padding: "32px 0" }}>
@@ -74,7 +76,7 @@ function StatsBlock() {
   const stats: { num: number; suffix?: string; label: string; desc: string }[] = [
     { num: 22, suffix: "+", label: "Export Markets", desc: "Active across the Middle East, SEA and Europe" },
     { num: 8, label: "Product Lines", desc: "Each tuned to international buyer specs" },
-    { num: 100, suffix: "%", label: "Farm-Direct Supply", desc: "Farmer-direct — no middlemen, full traceability" },
+    { num: 100, suffix: "%", label: "Origin Verified", desc: "Certified quality from South India's finest agri belts" },
     { num: 24, suffix: "h", label: "Quote Window", desc: "First response within one business day" },
   ];
   return (
