@@ -91,14 +91,14 @@ export default function Navbar() {
                   {l.label}
                 </Link>
               ))}
-              <Link 
-                href="/contact" 
-                className="btn btn-primary nav-cta"
-                ref={ctaRef}
-              >
-                Get Quote <Arrow size={14} />
-              </Link>
             </nav>
+            <Link
+              href="/contact"
+              className="btn btn-primary nav-cta"
+              ref={ctaRef}
+            >
+              Get Quote <Arrow size={14} />
+            </Link>
 
             <button
               type="button"

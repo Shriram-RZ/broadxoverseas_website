@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import PageTransition from "./components/PageTransition";
 import { MotionProvider, ScrollProgress } from "./components/Motion";
 import "./globals.css";
 import "./components.css";
@@ -37,7 +38,7 @@ export default function RootLayout({
         <MotionProvider>
           <ScrollProgress />
           <Navbar />
-          <main>{children}</main>
+          <PageTransition>{children}</PageTransition>
           <Footer />
         </MotionProvider>
       </body>

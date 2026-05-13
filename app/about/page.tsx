@@ -1,10 +1,9 @@
-import Link from "next/link";
 import PageHero from "../components/PageHero";
 import Reveal from "../components/Reveal";
 import { Ornament, ScrollReveal } from "../components/Motion";
+import CTAStrip from "../components/CTAStrip";
 import ReadMore from "./ReadMore";
 import {
-  Arrow,
   Shield,
   Award,
   Truck,
@@ -69,27 +68,27 @@ export default function AboutPage() {
               <Reveal delay={1}>
                 <ReadMore>
                   <p className="lead">
-                    Our strength lies in our deep-rooted network with the finest
-                    agricultural regions of India, combined with a rigorous
-                    quality process that ensures every shipment reflects our
-                    promise — pure, consistent, and reliable.
+                    Broad X Overseas is a Coimbatore-based international agricultural
+                    trade company, built on a foundation of quality, compliance and
+                    consistency. Headquartered in the heart of Tamil Nadu — one of India&apos;s
+                    most productive and diverse agricultural regions — we specialise in
+                    delivering export-grade produce to discerning buyers across 22+
+                    global markets.
                   </p>
                   <p>
-                    From the careful selection of raw materials to final
-                    packaging and documentation, every step is handled with
-                    precision and professionalism. We understand the
-                    expectations of international buyers: consistency in
-                    quality, reliability in supply, and transparency in trade —
-                    that&apos;s exactly what we deliver, shipment after
-                    shipment.
+                    Every product that carries the Broad X name meets the strictest
+                    international food safety benchmarks. Certified under FSSAI,
+                    registered with APEDA and IEC approved, we operate with the
+                    documentation discipline, grade consistency and shipment
+                    transparency that serious global buyers demand — from first enquiry
+                    to final delivery.
                   </p>
                   <p>
-                    Coimbatore offers the perfect launchpad — a city renowned
-                    for agricultural connectivity, port access via Tuticorin,
-                    Cochin and Chennai, and a long-standing trade
-                    infrastructure that lets us move produce to the Middle
-                    East, Southeast Asia and Europe with predictable lead
-                    times.
+                    From the Middle East to Southeast Asia, Europe to the Americas —
+                    Broad X Overseas is the single point of contact that importers,
+                    wholesalers and retail chains trust for reliable supply, competitive
+                    pricing and shipments that arrive exactly as specified. Because your
+                    buyers deserve the best.
                   </p>
                 </ReadMore>
               </Reveal>
@@ -99,22 +98,22 @@ export default function AboutPage() {
                   <li>
                     <div className="check"><Check /></div>
                     <div>
-                      <strong>Based in Coimbatore</strong>
-                      <span>A city renowned for agricultural connectivity and trade infrastructure.</span>
+                      <strong>Strong regional presence</strong>
+                      <span>Export-grade produce from South India&apos;s most productive and diverse agricultural belts.</span>
                     </div>
                   </li>
                   <li>
                     <div className="check"><Check /></div>
                     <div>
-                      <strong>Strategic global reach</strong>
-                      <span>Serving the Middle East, Southeast Asia, Europe — and beyond.</span>
+                      <strong>Rigorous quality process</strong>
+                      <span>Every lot inspected, graded and packed under strict hygiene protocols before shipment.</span>
                     </div>
                   </li>
                   <li>
                     <div className="check"><Check /></div>
                     <div>
-                      <strong>End-to-end accountability</strong>
-                      <span>Procurement, quality, logistics and documentation — all under one roof.</span>
+                      <strong>Global reach</strong>
+                      <span>Serving the Middle East, Southeast Asia, Europe and the Americas — and expanding.</span>
                     </div>
                   </li>
                 </ul>
@@ -199,37 +198,8 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* CTA */}
-      <section>
-        <div className="container">
-          <Reveal>
-            <div className="cta-strip">
-              <div className="grid">
-                <div>
-                  <div className="eyebrow">Ready to partner?</div>
-                  <h2>
-                    Ready to partner with{" "}
-                    <em>a reliable exporter?</em>
-                  </h2>
-                  <p>
-                    Tell us what you need and our team will respond with sample
-                    availability, pricing and a timeline — usually within one
-                    business day.
-                  </p>
-                </div>
-                <div className="actions">
-                  <Link href="/contact" className="btn btn-primary">
-                    Get Quote <Arrow />
-                  </Link>
-                  <Link href="/contact" className="btn btn-glass">
-                    Send Requirement
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </Reveal>
-        </div>
-      </section>
+      <CTAStrip />
+
     </>
   );
 }
@@ -257,8 +227,8 @@ const WHY_ITEMS = [
   },
   {
     icon: <Leaf />,
-    title: "Direct From Farm Gate",
-    text: "Procured directly from farmers — no middlemen, full traceability, fair pricing.",
+    title: "Origin Integrity",
+    text: "Traceable produce from certified origins across South India — consistent quality, season after season.",
   },
   {
     icon: <Globe />,

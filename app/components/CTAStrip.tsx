@@ -13,14 +13,14 @@ type Props = {
 };
 
 export default function CTAStrip({
-  eyebrow = "Ready to ship with confidence?",
+  eyebrow = "Ready to partner?",
   title = (
     <>
-      Your reliable supply partner is{" "}
-      <em>just a message away.</em>
+      Ready to partner with{" "}
+      <em>a reliable exporter?</em>
     </>
   ),
-  description = "Connect with our team to discuss your requirements, request samples, or get a competitive quotation.",
+  description = "Tell us what you need and our team will respond with sample availability, pricing and a timeline — usually within one business day.",
   primaryLabel = "Get Quote",
   primaryHref = "/contact",
   secondaryLabel = "Send Requirement",

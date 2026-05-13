@@ -107,12 +107,7 @@ export default function GalleryPage() {
         </div>
       </section>
 
-      <CTAStrip
-        eyebrow="Want to visit our operations?"
-        title={<>Buyers are welcome — <em>walk our facility.</em></>}
-        description="Planning a procurement visit to India? We'll arrange a facility tour, farm visits and tastings across the Coimbatore belt."
-        primaryLabel="Plan a visit"
-      />
+      <CTAStrip />
     </>
   );
 }

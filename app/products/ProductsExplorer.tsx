@@ -121,6 +121,8 @@ export default function ProductsExplorer() {
     const strip = stripRef.current;
 
     if (reducedMotion()) {
+      modalWasOpenRef.current = false;
+      swapSlugRef.current = null;
       gsap.set([grid, strip].filter(Boolean), { clearProps: "transform,opacity,filter" });
       setDisplayed(null);
       clearUrl();
@@ -128,6 +130,8 @@ export default function ProductsExplorer() {
     }
 
     if (!overlay || !card) {
+      modalWasOpenRef.current = false;
+      swapSlugRef.current = null;
       setDisplayed(null);
       clearUrl();
       return;
@@ -138,6 +142,8 @@ export default function ProductsExplorer() {
 
     const tl = gsap.timeline({
       onComplete: () => {
+        modalWasOpenRef.current = false;
+        swapSlugRef.current = null;
         if (grid) gsap.set(grid, { clearProps: "transform,opacity,filter" });
         if (strip) gsap.set(strip, { clearProps: "transform,opacity" });
         setDisplayed(null);
@@ -200,6 +206,9 @@ export default function ProductsExplorer() {
     }
 
     if (alreadyOpen) {
+      // Ensure the card is visible even when we skip the entrance tween
+      gsap.set(overlay, { autoAlpha: 1 });
+      gsap.set(card, { autoAlpha: 1, y: 0, scale: 1 });
       return;
     }
 
@@ -297,7 +306,11 @@ export default function ProductsExplorer() {
       return;
     }
 
-    if (displayed) return;
+    // Don't re-animate when modal closes — only on fresh mount / filter change
+    if (displayed || modalWasOpenRef.current) {
+      gsap.set(cards, { autoAlpha: 1, y: 0, scale: 1 });
+      return;
+    }
 
     gsap.fromTo(
       cards,

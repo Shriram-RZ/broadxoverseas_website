@@ -1,9 +1,8 @@
-import Link from "next/link";
 import PageHero from "../components/PageHero";
 import Reveal from "../components/Reveal";
 import { Ornament } from "../components/Motion";
+import CTAStrip from "../components/CTAStrip";
 import {
-  Arrow,
   Shield,
   Award,
   Truck,
@@ -28,21 +27,10 @@ const FEATURES = [
   { icon: <Award />, title: "Certified Compliance", text: "FSSAI · APEDA · IEC. Documentation and clearances handled end-to-end." },
   { icon: <Truck />, title: "Seamless Logistics", text: "End-to-end shipping — packaging, paperwork and freight forwarding under one roof." },
   { icon: <Users />, title: "Reliable Partnership", text: "Long-term buyer relationships grounded in transparency and consistent delivery." },
-  { icon: <Leaf />, title: "Direct From Farm Gate", text: "Procured directly from farmers — no middlemen, full traceability, fair pricing." },
+  { icon: <Leaf />, title: "Origin Integrity", text: "Traceable produce from certified origins across South India — consistent quality, season after season." },
   { icon: <Globe />, title: "Global Reach", text: "Active across the Middle East, Southeast Asia, Europe and expanding markets." },
   { icon: <Sparkles />, title: "Premium Grade", text: "Machine-graded, specification-matched produce — season after season, batch after batch." },
   { icon: <FileCheck />, title: "Transparent Trade", text: "Pre-shipment samples, third-party lab reports and shipment-level updates." },
-];
-
-const PROCESS = [
-  { n: "01", title: "Farm Intake", text: "Direct relationships with verified farmer partners across Coimbatore and neighbouring belts." },
-  { n: "02", title: "Inspection & Grading", text: "Machine-graded by size, colour, moisture and purity. Rejects diverted from export stock." },
-  { n: "03", title: "Processing", text: "Cleaned, sorted and processed under FSSAI-compliant hygiene protocols." },
-  { n: "04", title: "Packaging", text: "Moisture-controlled, tamper-evident packing tuned for long transit and retail shelves." },
-  { n: "05", title: "Documentation", text: "Phyto-sanitary certificates, COAs, packing lists and BL — assembled pre-shipment." },
-  { n: "06", title: "Dispatch", text: "Multi-modal logistics to Tuticorin, Chennai and Cochin ports — aligned to lead times." },
-  { n: "07", title: "Traceability", text: "Every batch traceable to origin, season and grading lot — full supply-chain transparency." },
-  { n: "08", title: "After-ship Support", text: "Quality feedback loop with buyers. Issues logged by batch and corrected next season." },
 ];
 
 const CERTS = [
@@ -134,41 +122,6 @@ export default function WhyChooseUsPage() {
         </div>
       </section>
 
-      {/* Process */}
-      <section>
-        <div className="container">
-          <div className="section-head">
-            <Reveal>
-              <div>
-                <div className="eyebrow">Our Process</div>
-                <h2 className="section-title" style={{ marginTop: 12 }}>
-                  Eight steps between <em>farm and freight.</em>
-                </h2>
-                <Ornament />
-              </div>
-            </Reveal>
-            <Reveal delay={1}>
-              <p className="lead">
-                Each product passes through a rigorous cycle — from the fields of
-                South India to the deck of an outbound container.
-              </p>
-            </Reveal>
-          </div>
-
-          <div className="process-grid">
-            {PROCESS.map((s, i) => (
-              <Reveal key={s.n} delay={((i % 4) + 1) as 1 | 2 | 3 | 4}>
-                <div className="process-card">
-                  <div className="n">{s.n}</div>
-                  <h4>{s.title}</h4>
-                  <p>{s.text}</p>
-                </div>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* Bullets recap */}
       <section className="bg-surface">
         <div className="container">
@@ -227,35 +180,8 @@ export default function WhyChooseUsPage() {
         </div>
       </section>
 
-      {/* CTA */}
-      <section>
-        <div className="container">
-          <Reveal>
-            <div className="cta-strip">
-              <div className="grid">
-                <div>
-                  <div className="eyebrow">Looking for a spec sheet?</div>
-                  <h2>
-                    We&apos;ll share <em>a sample and the paperwork.</em>
-                  </h2>
-                  <p>
-                    Tell us the product, the destination and the quantity —
-                    we&apos;ll respond with a specification, pricing and timeline.
-                  </p>
-                </div>
-                <div className="actions">
-                  <Link href="/contact" className="btn btn-primary">
-                    Get Quote <Arrow />
-                  </Link>
-                  <Link href="/products" className="btn btn-glass">
-                    Browse Products
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </Reveal>
-        </div>
-      </section>
+      <CTAStrip />
+
     </>
   );
 }

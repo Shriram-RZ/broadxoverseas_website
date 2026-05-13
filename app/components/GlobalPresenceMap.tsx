@@ -4,9 +4,14 @@ import { useState } from "react";
 import { ScrollReveal, Ornament } from "./Motion";
 
 const regions = [
-  { name: "Middle East", markets: "UAE · KSA · Oman · Qatar", x: 65.3, y: 36.1 },
-  { name: "Southeast Asia", markets: "Singapore · Malaysia · Indonesia", x: 78.9, y: 49.4 },
-  { name: "Europe", markets: "UK · Germany · Netherlands · France", x: 51.4, y: 21.1 },
+  { name: "Middle East", markets: "UAE · KSA · Oman · Qatar", x: 62.5, y: 38 },
+  { name: "Southeast Asia", markets: "Singapore · Malaysia · Indonesia", x: 80, y: 52 },
+  { name: "South Asia", markets: "India · Sri Lanka · Bangladesh", x: 71.5, y: 44 },
+  { name: "Europe", markets: "UK · Germany · Netherlands · France", x: 51, y: 22 },
+  { name: "North America", markets: "USA · Canada", x: 20, y: 32 },
+  { name: "Africa", markets: "Kenya · South Africa · Egypt", x: 53, y: 58 },
+  { name: "East Asia", markets: "China · Japan · South Korea", x: 84, y: 36 },
+  { name: "Australia & NZ", markets: "Australia · New Zealand", x: 87, y: 75 },
 ];
 const origin = { x: 71.4, y: 43.9 };
 

@@ -211,8 +211,8 @@ p { color: var(--ink-2); line-height: var(--lh-relaxed); margin: 0 0 var(--space
 .on-dark p { color: var(--fg-2); }
 
 /* ---------- Sections ---------- */
-section { padding: clamp(56px, 8vw, 112px) 0; position: relative; }
-section.section-tight { padding: clamp(40px, 5vw, 72px) 0; }
+section { padding: clamp(44px, 6vw, 88px) 0; position: relative; }
+section.section-tight { padding: clamp(32px, 4vw, 56px) 0; }
 .section-head {
   display: grid; grid-template-columns: 1fr auto; gap: 32px;
   align-items: end; margin-bottom: clamp(28px, 4vw, 48px);
@@ -279,10 +279,12 @@ section.section-tight { padding: clamp(40px, 5vw, 72px) 0; }
 
 /* ---------- Buttons ---------- */
 .btn {
+  position: relative;
   border: 0; cursor: pointer;
   font-family: var(--font-sans);
   font-weight: 600; font-size: 13.5px;
   display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  isolation: isolate;
   transition:
     transform var(--dur-fast) var(--ease-standard),
     background var(--dur-base) var(--ease-standard),
@@ -307,7 +309,7 @@ section.section-tight { padding: clamp(40px, 5vw, 72px) 0; }
 /* Primary — premium pearl with subtle pearlescent edge */
 .btn-primary {
   background: linear-gradient(180deg, #FFFFFF 0%, #F4F7FB 100%);
-  color: var(--ink-1);
+  color: #0B1B33;
   position: relative;
   overflow: hidden;
   border: 1px solid rgba(11, 27, 51, 0.08);
@@ -325,6 +327,7 @@ section.section-tight { padding: clamp(40px, 5vw, 72px) 0; }
   background: linear-gradient(115deg, transparent 0%, rgba(165, 220, 255, 0.45) 50%, transparent 100%);
   transform: skewX(-18deg);
   pointer-events: none;
+  z-index: -1;
   transition: left 700ms var(--ease-out);
 }
 .btn-primary:hover {
@@ -388,8 +391,22 @@ section.section-tight { padding: clamp(40px, 5vw, 72px) 0; }
   color: var(--ocean-deep);
 }
 .btn-outline:hover { background: var(--ocean-deep); color: #FFFFFF; transform: translateY(-2px); box-shadow: var(--shadow-ocean); }
-.on-dark .btn-outline { border-color: var(--ocean); color: var(--ocean-2); }
-.on-dark .btn-outline:hover { background: var(--ocean); color: var(--midnight-4); }
+.on-dark .btn-primary { color: #0B1B33; }
+.on-dark .btn-primary svg { color: #0B1B33; }
+.on-dark .btn-outline {
+  border-color: rgba(255, 255, 255, 0.55);
+  color: #FFFFFF;
+  background: rgba(255, 255, 255, 0.04);
+  -webkit-backdrop-filter: blur(10px) saturate(140%);
+  backdrop-filter: blur(10px) saturate(140%);
+}
+.on-dark .btn-outline:hover {
+  background: rgba(255, 255, 255, 0.92);
+  border-color: rgba(255, 255, 255, 0.92);
+  color: var(--midnight-3);
+  transform: translateY(-2px);
+  box-shadow: 0 14px 36px -10px rgba(0, 0, 0, 0.45);
+}
 
 .btn-link {
   background: transparent; padding: 0; color: var(--ocean-deep); border-radius: 0;
@@ -472,3 +489,133 @@ html { scrollbar-color: rgba(11, 27, 51, 0.18) transparent; scrollbar-width: thi
 
 /* GPU hint for animated regions */
 .gpu { transform: translateZ(0); backface-visibility: hidden; }
+
+/* ---------- Seamless dark↔light section seams ---------- */
+/* Soft pearl rise emerging out of a dark section above */
+.seam-from-dark { position: relative; }
+.seam-from-dark::before {
+  content: ""; position: absolute; left: 0; right: 0; top: -40px; height: 140px;
+  background: linear-gradient(to bottom, rgba(5, 14, 31, 0.65), rgba(5, 14, 31, 0.22) 55%, transparent 100%);
+  -webkit-backdrop-filter: blur(8px) saturate(110%);
+  backdrop-filter: blur(8px) saturate(110%);
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 0%, transparent 100%);
+  pointer-events: none; z-index: 1;
+}
+/* Pearl section dissolving into a dark section below */
+.seam-to-dark { position: relative; }
+.seam-to-dark::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 120px;
+  background: linear-gradient(to top, rgba(5, 14, 31, 0.10), transparent);
+  pointer-events: none; z-index: 1;
+}
+
+/* Smooth scrollbar gutter — prevent layout shift when overlays open */
+html { scrollbar-gutter: stable; }
+
+/* Better link affordance inside prose */
+.prose-link {
+  color: var(--ocean-deep);
+  border-bottom: 1px solid rgba(91, 136, 178, 0.35);
+  transition: color var(--dur-fast), border-color var(--dur-fast);
+}
+.prose-link:hover { color: var(--midnight-2); border-bottom-color: var(--ocean-deep); }
+
+/* Mobile tap-target enforcement for nav/list links */
+@media (max-width: 760px) {
+  a, button { -webkit-tap-highlight-color: transparent; }
+}
+
+/* ---------- Page transition (route change) ---------- */
+main[data-transition] {
+  transition:
+    opacity 240ms var(--ease-standard),
+    transform 320ms var(--ease-out),
+    filter 320ms var(--ease-standard);
+}
+main[data-transition="out"] {
+  opacity: 0;
+  transform: translateY(-8px) scale(0.992);
+  filter: blur(2px) saturate(0.92);
+  pointer-events: none;
+  will-change: opacity, transform, filter;
+}
+main[data-transition="in"] {
+  opacity: 0;
+  transform: translateY(14px) scale(1.004);
+  filter: blur(1px);
+  will-change: opacity, transform, filter;
+}
+main[data-transition="idle"] {
+  opacity: 1;
+  transform: none;
+  filter: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  main[data-transition] { transition: none !important; opacity: 1 !important; transform: none !important; filter: none !important; }
+}
+
+/* ---------- Section rhythm — alternating tinted bands w/ smooth seams ---------- */
+.band-cream {
+  position: relative;
+  background:
+    radial-gradient(900px 460px at 12% 0%, rgba(251, 249, 228, 0.55), transparent 58%),
+    linear-gradient(180deg, #FFFCEF 0%, #FBF9E4 100%);
+}
+.band-mist {
+  position: relative;
+  background:
+    radial-gradient(900px 480px at 88% 0%, rgba(91, 136, 178, 0.10), transparent 58%),
+    linear-gradient(180deg, #F4F9FD 0%, #ECF3FA 100%);
+}
+.band-ivory {
+  position: relative;
+  background: linear-gradient(180deg, #FFFFFF 0%, #FBFCFE 100%);
+}
+.band-midnight {
+  position: relative;
+  background:
+    radial-gradient(1100px 520px at 82% -10%, rgba(91, 136, 178, 0.18), transparent 60%),
+    linear-gradient(180deg, var(--midnight-3) 0%, var(--midnight-4) 100%);
+  color: var(--fg-1);
+}
+.band-midnight h2,
+.band-midnight h3,
+.band-midnight .section-title { color: var(--fg-1); }
+.band-midnight .section-title em,
+.band-midnight em { color: var(--ocean-2); }
+.band-midnight .lead,
+.band-midnight p { color: var(--fg-2); }
+.band-midnight .eyebrow { color: var(--ocean-2); }
+
+/* Smooth seam between consecutive bands — a soft cross-fade strip */
+.band-cream + .band-mist::before,
+.band-mist + .band-cream::before,
+.band-ivory + .band-cream::before,
+.band-ivory + .band-mist::before,
+.band-mist + .band-ivory::before,
+.band-cream + .band-ivory::before {
+  content: "";
+  position: absolute;
+  inset: -1px 0 auto;
+  height: 90px;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.45), transparent);
+  pointer-events: none;
+  z-index: 0;
+}
+.band-midnight + section::before,
+section + .band-midnight::before {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; top: -1px;
+  height: 100px;
+  background: linear-gradient(to bottom, rgba(5, 14, 31, 0.18), transparent 80%);
+  pointer-events: none; z-index: 0;
+}
+.band-cream > .container,
+.band-mist > .container,
+.band-ivory > .container,
+.band-midnight > .container {
+  position: relative;
+  z-index: 1;
+}

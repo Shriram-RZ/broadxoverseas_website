@@ -52,14 +52,21 @@ function Marquee30Strip() {
     "IEC Approved",
     "Phytosanitary Certified",
     "Export-Grade Quality",
+    "Tuticorin Port",
+    "Chennai Port",
+    "Cochin Port",
     "22+ Export Markets",
-    "Tuticorin · Chennai · Cochin",
+    "Middle East",
+    "Southeast Asia",
+    "Europe",
+    "Africa",
+    "Americas",
     "Third-Party Lab Tested",
     "Pre-Shipment Samples",
     "Custom Packaging",
   ];
   return (
-    <section className="bg-deep" style={{ padding: "32px 0" }}>
+    <section className="bg-deep seam-from-dark home-marquee" style={{ padding: "44px 0" }}>
       <Marquee speed={36}>
         {items.map((t) => (
           <span key={t} className="marquee-item">
@@ -80,7 +87,7 @@ function StatsBlock() {
     { num: 24, suffix: "h", label: "Quote Window", desc: "First response within one business day" },
   ];
   return (
-    <section style={{ paddingTop: "clamp(48px, 6vw, 80px)" }}>
+    <section className="band-mist" style={{ paddingTop: "clamp(48px, 6vw, 80px)" }}>
       <div className="container">
         <ScrollReveal>
           <div className="stat-row">
@@ -103,7 +110,7 @@ function StatsBlock() {
 /* ============== About preview ============== */
 function AboutPreview() {
   return (
-    <section className="bg-surface" id="about">
+    <section className="band-ivory" id="about">
       <div className="container">
         <div className="split">
           <ScrollReveal className="split-media">
@@ -131,9 +138,10 @@ function AboutPreview() {
             </ScrollReveal>
             <ScrollReveal delay={0.08}>
               <p className="lead" style={{ marginTop: 18 }}>
-                Headquartered in Coimbatore — the heart of South India&apos;s
-                most fertile agricultural belt — we bridge premium Indian
-                produce with discerning buyers across the world.
+                Broad X Overseas is a Coimbatore-based international agricultural
+                trade company, built on quality, compliance and consistency. We
+                deliver export-grade produce to discerning buyers across 22+
+                global markets.
               </p>
             </ScrollReveal>
             <ScrollReveal delay={0.16}>
@@ -141,22 +149,22 @@ function AboutPreview() {
                 <li>
                   <div className="check"><Check /></div>
                   <div>
-                    <strong>Deep-rooted farmer network</strong>
-                    <span>Direct procurement across South India&apos;s most productive zones.</span>
+                    <strong>Strong regional presence</strong>
+                    <span>Export-grade produce from South India&apos;s most productive agricultural belts.</span>
                   </div>
                 </li>
                 <li>
                   <div className="check"><Check /></div>
                   <div>
                     <strong>Rigorous quality process</strong>
-                    <span>Graded, processed and packed under strict hygiene protocols.</span>
+                    <span>Every lot inspected, graded and packed under strict hygiene protocols before shipment.</span>
                   </div>
                 </li>
                 <li>
                   <div className="check"><Check /></div>
                   <div>
                     <strong>Global reach</strong>
-                    <span>Serving the Middle East, Southeast Asia, Europe — and expanding.</span>
+                    <span>Serving the Middle East, Southeast Asia, Europe and the Americas — and expanding.</span>
                   </div>
                 </li>
               </ul>
@@ -184,19 +192,19 @@ function AboutPreview() {
 /* ============== Process timeline (4 stops) ============== */
 function ProcessTimeline() {
   const steps = [
-    { n: "01", icon: <Leaf />, title: "Farm Intake", text: "Direct relationships with verified farmer partners across Coimbatore." },
-    { n: "02", icon: <Sparkles />, title: "Grade & Process", text: "Machine-graded by size, colour, moisture; FSSAI hygiene protocols." },
-    { n: "03", icon: <Container />, title: "Pack & Document", text: "Moisture-controlled packing, COAs, phyto-sanitary, packing lists." },
-    { n: "04", icon: <Anchor />, title: "Ship & Trace", text: "Multi-modal logistics from Tuticorin · Chennai · Cochin. Full traceability." },
+    { n: "01", icon: <Leaf />, title: "Inspect & Select", text: "Every lot assessed against export-grade specifications — only quality-cleared produce moves forward." },
+    { n: "02", icon: <Sparkles />, title: "Grade & Process", text: "Machine-graded by size, colour and moisture — FSSAI hygiene protocols maintained throughout." },
+    { n: "03", icon: <Container />, title: "Pack & Certify", text: "Moisture-controlled packing with COAs, phytosanitary certificates and full shipment documentation." },
+    { n: "04", icon: <Anchor />, title: "Ship & Track", text: "Multi-modal freight from Tuticorin · Chennai · Cochin with end-to-end traceability to destination." },
   ];
   return (
-    <section className="bg-surface" id="process">
+    <section className="band-cream" id="process">
       <div className="container">
         <ScrollReveal>
           <SectionHeading
-            eyebrow="From farm to freight"
-            title={<>A four-stop journey, <em>logged at every step.</em></>}
-            description="Every batch you receive carries a paper trail back to a specific farmer, a specific season and a specific grading lot."
+            eyebrow="The Broad X Process"
+            title={<>Four Steps. Zero Compromise. <em>Built for the world&apos;s standards.</em></>}
+            description="The standard behind every batch — inspected, graded, certified and shipped with precision at every stage. One process. Every shipment."
             align="center"
           />
         </ScrollReveal>
@@ -311,28 +319,40 @@ function FAQ() {
   const items = [
     {
       q: "What's the minimum order quantity?",
-      a: "MOQs vary by product. For most spices and dry produce we work from a single 20-foot container; for perishables we can do partial loads with consolidation partners. Tell us your destination and we'll quote both options.",
+      a: "Minimum order quantities vary by product. For most lines, we accept from 1 MT for samples and trial orders, with standard commercial orders from 5 MT. Contact us for product-specific MOQs.",
     },
     {
       q: "Which ports do you ship from?",
-      a: "Tuticorin, Chennai and Cochin — chosen per destination based on lead time and freight optimization. We coordinate end-to-end with the freight forwarder of your choice or arrange one for you.",
+      a: "We operate from three major South Indian ports — Tuticorin (V.O. Chidambaranar), Chennai and Cochin — giving us flexibility on routing and lead times depending on your destination.",
     },
     {
       q: "Can you provide samples before a full order?",
-      a: "Yes. We send pre-shipment samples by courier on request, and for repeat lanes we maintain a rolling sample inventory so you can compare batches across seasons.",
+      a: "Yes. We provide pre-shipment samples for all product lines. Sample shipments are dispatched within 3–5 business days of confirmation, along with relevant lab reports and grade specifications.",
     },
     {
       q: "What documentation comes with each shipment?",
-      a: "Phyto-sanitary certificate, certificate of origin, COA / lab reports where required, packing list, commercial invoice and B/L. We pre-assemble the documentation pack before vessel cut-off.",
+      a: "Every shipment includes: Commercial Invoice, Packing List, Bill of Lading, Certificate of Origin, Phytosanitary Certificate, FSSAI Certificate and third-party lab COA on request.",
     },
     {
       q: "Do you handle private-label packaging?",
-      a: "Yes — branded packaging, retail-ready bags, bulk drums and food-grade liners. Share your brand assets and target unit size and we'll spec it with our packing partners.",
+      a: "Yes. We offer custom packaging as per buyer specifications — including branded bags, carton printing and retail-ready formats. Minimum quantities apply for custom packaging runs.",
+    },
+    {
+      q: "What certifications do your products carry?",
+      a: "Our operations are FSSAI certified, APEDA registered and IEC approved. All export shipments carry phytosanitary certificates. Third-party lab testing (pesticide residue, heavy metals, microbial) is available on request.",
+    },
+    {
+      q: "What are your standard payment terms?",
+      a: "We accept Telegraphic Transfer (T/T), Letter of Credit (L/C) and advance payment depending on order size and buyer relationship. Terms are discussed and confirmed at the quotation stage.",
+    },
+    {
+      q: "Can you handle both FCL and LCL shipments?",
+      a: "Yes. We manage both Full Container Load (FCL) and Less than Container Load (LCL) shipments. Our logistics team advises the most cost-effective option based on your order volume and destination.",
     },
   ];
 
   return (
-    <section className="bg-surface" id="faq">
+    <section className="band-mist" id="faq">
       <div className="container">
         <ScrollReveal>
           <SectionHeading
@@ -342,7 +362,7 @@ function FAQ() {
                 What <em>buyers ask first.</em>
               </>
             }
-            description="The five questions our team handles most often before a first order."
+            description="The questions our team handles most often before a first order."
             align="center"
           />
         </ScrollReveal>
@@ -367,7 +387,7 @@ function CTASection() {
           <div className="cta-strip">
             <div className="grid">
               <div>
-                <div className="eyebrow">Ready to ship with confidence?</div>
+                <div className="eyebrow">Because your buyers deserve the best</div>
                 <h2>
                   Your reliable supply partner is{" "}
                   <em>just a message away.</em>

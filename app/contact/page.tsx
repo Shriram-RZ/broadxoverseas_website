@@ -1,6 +1,7 @@
 import { Suspense } from "react";
 import PageHero from "../components/PageHero";
 import EnquiryForm from "../components/EnquiryForm";
+import CTAStrip from "../components/CTAStrip";
 import { ScrollReveal, Ornament } from "../components/Motion";
 import { Phone, Mail, Globe, Pin, Clock, Calendar } from "../components/Icons";
 
@@ -123,6 +124,8 @@ export default function ContactPage() {
           </div>
         </div>
       </section>
+
+      <CTAStrip />
     </>
   );
 }

@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Arrow, Globe, Shield, Container } from "./Icons";
+import { Arrow, Globe, Shield, Truck, Users } from "./Icons";
 import { MagneticHover } from "./Motion";
 
 const isBrowser = typeof window !== "undefined";
@@ -26,8 +26,14 @@ export default function Hero() {
     gsap.registerPlugin(ScrollTrigger);
   }, []);
 
-  // Detect mobile device
-  const isMobile = typeof window !== "undefined" && window.innerWidth <= 760;
+  // Detect mobile device — set after mount to avoid hydration mismatch
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth <= 760);
+    check();
+    window.addEventListener("resize", check, { passive: true });
+    return () => window.removeEventListener("resize", check);
+  }, []);
 
   return (
     <section
@@ -58,42 +64,25 @@ export default function Hero() {
           </video>
         )}
       </div>
-      <div className="hero-overlay" />
+      {/* <div className="hero-overlay" /> */}
 
       <div className="hero-stack">
         {/* ---- Left-aligned text content ---- */}
         <div className="container hero-content-wrap">
           <div className="hero-main">
-            {/* Eyebrow badge */}
-            <div className="hero-eyebrow hero-anim hero-anim-1">
-              <span className="dot" />
-              Trusted Agricultural Exporter
-            </div>
-
-            <h1 className="hero-title-serif hero-anim hero-anim-2">
-              <span className="line">Global Reach,</span>
-              <span className="line">Delivering <span className="accent-text">Value</span></span>
+            <h1 className="hero-title-sans hero-anim hero-anim-2">
+              <span className="line">Global Reach.</span>
+              <span className="line">Delivering Value.</span>
             </h1>
 
-            <p className="hero-elegant-line hero-anim hero-anim-3">
-              Premium produce, elevated for international markets.
-            </p>
-
             <p className="lead hero-lead hero-anim hero-anim-4">
-              Broad X Overseas connects buyers worldwide with dependable agricultural
-              exports from South India — transparent procurement, certified quality,
-              and end-to-end logistics you can trust.
+              Broad X connects businesses worldwide with reliable export solutions.
             </p>
 
             <div className="hero-cta hero-anim hero-anim-5">
               <MagneticHover strength={0.15}>
                 <Link href="/products" className="btn btn-outline hero-cta-ghost">
-                  Our Products
-                </Link>
-              </MagneticHover>
-              <MagneticHover strength={0.15}>
-                <Link href="/contact" className="btn btn-primary">
-                  Get Quote <Arrow />
+                  Our Services
                 </Link>
               </MagneticHover>
             </div>
@@ -105,31 +94,20 @@ export default function Hero() {
           <div className="container">
             <div className="hero-three-boxes">
               <div className="hero-card">
-                <div className="ico">
-                  <Globe size={20} />
-                </div>
-                <div>
-                  <div className="t">Global Network</div>
-                  <div className="d">22+ export markets</div>
-                </div>
+                <div className="ico"><Globe size={20} /></div>
+                <div><div className="t">Global Network</div></div>
               </div>
               <div className="hero-card">
-                <div className="ico">
-                  <Shield size={20} />
-                </div>
-                <div>
-                  <div className="t">Quality Assured</div>
-                  <div className="d">FSSAI · APEDA · IEC</div>
-                </div>
+                <div className="ico"><Truck size={20} /></div>
+                <div><div className="t">Reliable Shipping</div></div>
               </div>
               <div className="hero-card">
-                <div className="ico">
-                  <Container size={20} />
-                </div>
-                <div>
-                  <div className="t">Reliable Logistics</div>
-                  <div className="d">End-to-end shipping</div>
-                </div>
+                <div className="ico"><Shield size={20} /></div>
+                <div><div className="t">Quality Assurance</div></div>
+              </div>
+              <div className="hero-card">
+                <div className="ico"><Users size={20} /></div>
+                <div><div className="t">Customer Focus</div></div>
               </div>
             </div>
           </div>
