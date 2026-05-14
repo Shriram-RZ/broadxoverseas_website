@@ -16,6 +16,8 @@ export default function EnquiryForm() {
 
   const [product, setProduct] = useState<string>("general");
   const [sent, setSent] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
   const [open, setOpen] = useState(false);
   const [activeIdx, setActiveIdx] = useState<number>(0);
@@ -100,10 +102,39 @@ export default function EnquiryForm() {
     li?.scrollIntoView({ block: "nearest" });
   }, [open, activeIdx]);
 
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setSent(true);
-    setTimeout(() => setSent(false), 4000);
+    if (sending) return;
+    const fd = new FormData(e.currentTarget);
+    const payload = {
+      name: String(fd.get("name") ?? ""),
+      company: String(fd.get("company") ?? ""),
+      email: String(fd.get("email") ?? ""),
+      phone: String(fd.get("phone") ?? ""),
+      location: String(fd.get("location") ?? ""),
+      product: String(fd.get("product") ?? "general"),
+      requirement: String(fd.get("requirement") ?? ""),
+      website: String(fd.get("website") ?? ""),
+    };
+    setSending(true);
+    setErrorMsg(null);
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      const data = (await res.json().catch(() => ({}))) as { ok?: boolean; error?: string };
+      if (!res.ok || !data.ok) throw new Error(data.error || "Failed to send");
+      setSent(true);
+      (e.target as HTMLFormElement).reset();
+      setProduct("general");
+      setTimeout(() => setSent(false), 6000);
+    } catch (err) {
+      setErrorMsg(err instanceof Error ? err.message : "Failed to send");
+    } finally {
+      setSending(false);
+    }
   };
 
   const current = PRODUCT_OPTIONS.find((p) => p.slug === product);
@@ -203,9 +234,17 @@ export default function EnquiryForm() {
         <label htmlFor="requirement">Requirement — quantity, target port, packaging</label>
       </div>
 
+      {/* honeypot — hidden from real users */}
+      <div aria-hidden="true" style={{ position: "absolute", left: "-10000px", width: 1, height: 1, overflow: "hidden" }}>
+        <label htmlFor="website">Website</label>
+        <input id="website" name="website" type="text" tabIndex={-1} autoComplete="off" />
+      </div>
+
       <div className="form-actions">
-        <button type="submit" className="btn btn-primary">
-          {sent ? (
+        <button type="submit" className="btn btn-primary" disabled={sending}>
+          {sending ? (
+            <>Sending…</>
+          ) : sent ? (
             <>Inquiry sent <Check size={14} /></>
           ) : (
             <>Send Inquiry <Arrow size={14} /></>
@@ -216,6 +255,11 @@ export default function EnquiryForm() {
       {sent && (
         <div className="form-success" role="status">
           <Check size={14} /> Thanks — we&apos;ll be in touch shortly.
+        </div>
+      )}
+      {errorMsg && (
+        <div className="form-success" role="alert" style={{ color: "#b91c1c" }}>
+          {errorMsg}
         </div>
       )}
     </form>

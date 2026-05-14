@@ -13,9 +13,8 @@ export default function Footer() {
           <div className="footer-col footer-col-brand">
             <Link href="/" className="logo" aria-label="Broad X Overseas — Home">
               <span className="logo-mark">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-                  <path d="M5 5l14 14M19 5L5 19" />
-                </svg>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src="/brand/icon.svg" alt="" aria-hidden />
               </span>
               <span className="logo-text">
                 Broad <span className="accent">X</span> Overseas

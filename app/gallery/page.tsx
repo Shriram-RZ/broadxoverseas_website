@@ -25,7 +25,7 @@ const IMAGES: Array<{ src: string; title: string; tag: string; tall?: boolean }>
     tag: "Eco packaging",
   },
   {
-    src: "https://images.unsplash.com/photo-1587496679742-bad432fe8cc0?auto=format&fit=crop&w=1200&q=80",
+    src: "/products/lemon.jpg",
     title: "Fresh lemons from South Indian groves",
     tag: "Fresh",
   },
@@ -36,12 +36,12 @@ const IMAGES: Array<{ src: string; title: string; tag: string; tall?: boolean }>
     tall: true,
   },
   {
-    src: "https://images.unsplash.com/photo-1599909533733-32b9097a1ce6?auto=format&fit=crop&w=1200&q=80",
+    src: "/products/curry-leaves.jpg",
     title: "Curry leaves — aromatic and authentic",
     tag: "Aromatic",
   },
   {
-    src: "https://images.unsplash.com/photo-1567892737950-30c4db37a4e0?auto=format&fit=crop&w=1200&q=80",
+    src: "/products/groundnut.jpg",
     title: "Raw groundnut — bulk grade",
     tag: "Protein",
   },
@@ -62,7 +62,7 @@ const IMAGES: Array<{ src: string; title: string; tag: string; tall?: boolean }>
     tall: true,
   },
   {
-    src: "https://images.unsplash.com/photo-1530507629858-e4977d30e9e4?auto=format&fit=crop&w=1200&q=80",
+    src: "https://images.unsplash.com/photo-1488459716781-31db52582fe9?auto=format&fit=crop&w=1200&q=80",
     title: "Hands sorting fresh produce",
     tag: "Grading",
   },

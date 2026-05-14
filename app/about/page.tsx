@@ -43,7 +43,7 @@ export default function AboutPage() {
             <Reveal className="split-media">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src="https://images.unsplash.com/photo-1530507629858-e4977d30e9e4?auto=format&fit=crop&w=1400&q=80"
+                src="https://images.unsplash.com/photo-1488459716781-31db52582fe9?auto=format&fit=crop&w=1400&q=80"
                 alt="Hands holding fresh turmeric roots"
               />
               <div className="chip">

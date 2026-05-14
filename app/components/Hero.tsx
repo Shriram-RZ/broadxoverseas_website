@@ -26,15 +26,6 @@ export default function Hero() {
     gsap.registerPlugin(ScrollTrigger);
   }, []);
 
-  // Detect mobile device — set after mount to avoid hydration mismatch
-  const [isMobile, setIsMobile] = useState(false);
-  useEffect(() => {
-    const check = () => setIsMobile(window.innerWidth <= 760);
-    check();
-    window.addEventListener("resize", check, { passive: true });
-    return () => window.removeEventListener("resize", check);
-  }, []);
-
   return (
     <section
       className={`hero hero-reference on-dark ${mounted ? "hero-entered" : ""}`}
@@ -42,27 +33,19 @@ export default function Hero() {
       ref={root}
     >
       <div className="hero-bg" ref={bgRef}>
-        {isMobile ? (
-          <img
-            src="/hero_mobile.jpg"
-            alt="Broad X Overseas Hero"
-            className="hero-video"
-            style={{ objectFit: "cover", width: "100%", height: "100%" }}
-            loading="lazy"
-          />
-        ) : (
-          <video
-            className="hero-video"
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="auto"
-          >
-            <source src="/hero_video.mp4" type="video/mp4" />
-            Your browser does not support the video tag.
-          </video>
-        )}
+        <video
+          className="hero-video"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="auto"
+          poster="/hero_poster.jpg"
+          {...({ "webkit-playsinline": "true" } as Record<string, string>)}
+        >
+          <source src="/hero_video.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
       </div>
       {/* <div className="hero-overlay" /> */}
 

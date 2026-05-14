@@ -41,7 +41,7 @@ export const PRODUCTS: Product[] = [
     desc: "Export-grade lemons, size-sorted and moisture-checked — meeting international food safety and grade specifications.",
     long: "Known for exceptional juice content, vibrant colour and sharp citrus aroma. Carefully sorted, cleaned and packed to preserve freshness through long transit periods — ideal for retail supermarkets, hospitality chains, beverage manufacturers and wholesale distributors.",
     highlights: ["High Juice Content", "Export Sorted & Graded", "Long Shelf Life", "Inspection-Cleared"],
-    img: "https://images.unsplash.com/photo-1587496679742-bad432fe8cc0?auto=format&fit=crop&w=1200&q=80",
+    img: "/products/lemon.jpg",
     category: "Fresh",
   },
   {
@@ -63,7 +63,7 @@ export const PRODUCTS: Product[] = [
     desc: "Hygienically cleaned, moisture-controlled packing. Ideal for ethnic grocery, food manufacturing and spice processing buyers.",
     long: "Bursting with a distinctive aroma and flavour that is irreplaceable in authentic South Asian, Southeast Asian and Middle Eastern cuisines. Carefully packed to retain freshness throughout international transit — ideal for Indian grocery chains, ethnic food distributors and gourmet retail markets worldwide.",
     highlights: ["Fresh Aromatic Grade", "Moisture Controlled", "Restaurant & Retail", "Ethnic Food Markets"],
-    img: "https://images.unsplash.com/photo-1599909533733-32b9097a1ce6?auto=format&fit=crop&w=1200&q=80",
+    img: "/products/curry-leaves.jpg",
     category: "Aromatic",
   },
   {
@@ -74,7 +74,7 @@ export const PRODUCTS: Product[] = [
     desc: "Machine-cleaned, graded by size and packed to meet international bulk commodity specifications.",
     long: "A premium commodity for global snack food manufacturers, peanut butter producers, oil extraction units and bulk ingredient buyers. Procured from certified origins in India's leading groundnut belts. Available in shelled, unshelled and blanched variants to meet your procurement needs every season.",
     highlights: ["Machine Cleaned", "Aflatoxin Controlled", "Shelled & Unshelled", "Food Industry Grade"],
-    img: "https://images.unsplash.com/photo-1567892737950-30c4db37a4e0?auto=format&fit=crop&w=1200&q=80",
+    img: "/products/groundnut.jpg",
     category: "Protein",
   },
   {

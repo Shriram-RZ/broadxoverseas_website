@@ -66,7 +66,7 @@ function Marquee30Strip() {
     "Custom Packaging",
   ];
   return (
-    <section className="bg-deep seam-from-dark home-marquee" style={{ padding: "44px 0" }}>
+    <section className="bg-deep home-marquee" style={{ padding: "44px 0" }}>
       <Marquee speed={36}>
         {items.map((t) => (
           <span key={t} className="marquee-item">
